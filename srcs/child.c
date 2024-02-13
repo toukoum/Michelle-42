@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/13 14:23:23 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/13 19:19:40 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell.h"
 #include <unistd.h>
 
-static char	**remove_surrounding_quotes(char **split)
+char	**remove_surrounding_quotes(char **split)
 {
 	char	**no_surr_quote;
 	int		i;
@@ -100,11 +100,13 @@ int	run_command(t_data data)
 
 	setup_pipes(data);
 	no_surr_quotes = remove_surrounding_quotes(data.cmd);
+	if (builtin(no_surr_quotes, data.env_list))
+		return (free_split(no_surr_quotes), 1);
 	path = find_path(data);
 	if (!path)
 	{
+		printf("command not found: %s\n", no_surr_quotes[0]);
 		free_split(no_surr_quotes);
-		printf("command not found: %s\n", data.cmd[0]);
 		return (0);
 	}
 	execve(path, no_surr_quotes, data.env);

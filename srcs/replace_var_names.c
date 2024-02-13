@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:16:20 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/13 17:01:34 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/13 18:11:59 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*extract_var_name(char *input)
 		i++;
 	str = ft_calloc(i + 1, sizeof(char));
 	if (!str)
-		return (NULL);
+		return (free(input), NULL);
 	str[0] = '$';
 	i = 1;
 	while (input[i] && (ft_isalnum(input[i]) || input[i] == '_'))

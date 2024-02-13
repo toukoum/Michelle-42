@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/13 16:24:39 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/13 19:19:46 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ char	*get_var_value(t_env *head, char *name);
 char	*replace_var_names(char *input, t_env *env, int res);
 char	**pipe_split(char *input);
 char	**env_to_split(t_env *head);
+char	**remove_surrounding_quotes(char **split);
 char	***split_split(char **pipe_split);
 
 int		run_command(t_data data);
@@ -67,5 +68,10 @@ int		set_quote(char c, char *quote);
 int		parse_input(char *input, t_env *env, int res);
 int		split_split_size(char ***split);
 int		**create_pipes(int size);
+
+// BUILTINS
+bool	builtin(char **cmd, t_env *env);
+void	ft_echo(char **cmd);
+void	ft_export(char **cmd, t_env *env);
 
 #endif
