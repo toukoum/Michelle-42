@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 17:25:59 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/13 18:32:29 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/13 19:35:17 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static bool	only_n(char *str)
 	return (true);
 }
 
-void	ft_echo(char **cmd)
+int	ft_echo(char **cmd)
 {
 	int		i;
 	bool	flag;

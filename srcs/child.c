@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/13 18:34:56 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/13 19:19:40 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell.h"
 #include <unistd.h>
 
-static char	**remove_surrounding_quotes(char **split)
+char	**remove_surrounding_quotes(char **split)
 {
 	char	**no_surr_quote;
 	int		i;

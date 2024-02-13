@@ -6,10 +6,11 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/13 18:05:21 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/13 19:36:39 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 #include <sys/wait.h>
 
