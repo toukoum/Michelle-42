@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:50:34 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/09 16:41:24 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/13 18:00:06 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,18 @@ static int	word_size(char *input, int i, char quote)
 	int	size;
 
 	size = 0;
+	if (quote)
+	{
+		i++;
+		size++;
+	}
 	while (input[i])
 	{
 		set_quote(input[i], &quote);
 		if (input[i] == ' ' && !quote)
+		{
 			return (size);
+		}
 		i++;
 		size++;
 	}

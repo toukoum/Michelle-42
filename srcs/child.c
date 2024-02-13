@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/13 14:23:23 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/13 18:23:47 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,13 @@ static char	*find_path(t_data data)
 	return (free_split(split), NULL);
 }
 
+static bool	builtin(char **cmd)
+{
+	if (!ft_strcmp(cmd[0], "echo"))
+		return (ft_echo(cmd), true);
+	return (false);
+}
+
 static void	setup_pipes(t_data data)
 {
 	if (data.pipes[0] == NULL)
@@ -100,11 +107,13 @@ int	run_command(t_data data)
 
 	setup_pipes(data);
 	no_surr_quotes = remove_surrounding_quotes(data.cmd);
+	if (builtin(no_surr_quotes))
+		return (1);
 	path = find_path(data);
 	if (!path)
 	{
 		free_split(no_surr_quotes);
-		printf("command not found: %s\n", data.cmd[0]);
+		printf("command not found: %s\n", no_surr_quotes[0]);
 		return (0);
 	}
 	execve(path, no_surr_quotes, data.env);

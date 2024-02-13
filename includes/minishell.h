@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/13 16:24:39 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/13 17:34:32 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,8 @@ int		set_quote(char c, char *quote);
 int		parse_input(char *input, t_env *env, int res);
 int		split_split_size(char ***split);
 int		**create_pipes(int size);
+
+// BUILTINS
+void	ft_echo(char **cmd);
 
 #endif

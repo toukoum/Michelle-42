@@ -2,7 +2,7 @@ NAME = minishell
 
 C_FILES =	main.c str_replace.c store_env.c env_list_utils.c input.c parse_input.c \
 			replace_var_names.c split_split.c pipe_split.c exec.c child.c \
-			split_split_utils.c pipe_utils.c
+			split_split_utils.c pipe_utils.c builtin/echo.c
 
 SRCS = $(addprefix srcs/,$(C_FILES))
 OBJS = $(SRCS:.c=.o)
@@ -10,6 +10,7 @@ OBJS = $(SRCS:.c=.o)
 CFLAGS = -Wall -Wextra -Werror -I includes/ -g3
 
 all: $(NAME)
+
 
 $(NAME): $(OBJS)
 	make -C libft/
