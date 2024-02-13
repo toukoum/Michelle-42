@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/13 17:34:32 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/13 18:31:00 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int		split_split_size(char ***split);
 int		**create_pipes(int size);
 
 // BUILTINS
+bool	builtin(char **cmd, t_env *env);
 void	ft_echo(char **cmd);
 
 #endif

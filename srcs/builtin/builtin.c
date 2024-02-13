@@ -1,50 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/13 17:25:59 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/13 18:32:29 by ketrevis         ###   ########.fr       */
+/*   Created: 2024/02/13 18:29:22 by ketrevis          #+#    #+#             */
+/*   Updated: 2024/02/13 18:32:32 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	only_n(char *str)
+bool	builtin(char **cmd, t_env *env)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] != 'n')
-			return (false);
-		i++;
-	}
-	return (true);
-}
-
-void	ft_echo(char **cmd)
-{
-	int		i;
-	bool	flag;
-
-	i = 1;
-	flag = false;
-	while (cmd[i][0] == '-' && only_n(cmd[i] + 1))
-	{
-		flag = true;
-		i++;
-	}
-	while (cmd[i])
-	{
-		printf("%s", cmd[i]);
-		if (cmd[i + 1])
-			printf(" ");
-		i++;
-	}
-	if (!flag)
-		printf("\n");
+	if (!ft_strcmp(cmd[0], "echo"))
+		return (ft_echo(cmd), true);
+	if (!ft_strcmp(cmd[0], "env"))
+		return (display_env(env), true);
+	return (false);
 }
