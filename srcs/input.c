@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:09:18 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/10 10:54:38 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/13 16:29:20 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	quit_shell(t_env *env)
 static void	catch_sigint(int sig)
 {
 	(void)sig;
-	rl_on_new_line();
 	printf("\n");
+	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
@@ -35,6 +35,8 @@ static void	handle_parse_res(int res, char *input, t_env *env)
 {
 	if (res != EMPTY_INPUT)
 		add_history(input);
+	if (res == SYNTAX_ERROR)
+		printf("syntax error\n");
 	free(input);
 	if (res == EXIT)
 		quit_shell(env);
@@ -45,15 +47,15 @@ void	input(t_env *env)
 	char	*input;
 	int		res;
 
-	(void)res;
 	signal(SIGINT, catch_sigint);
 	signal(SIGQUIT, SIG_IGN);
+	res = 0;
 	while (1)
 	{
 		input = readline("minishell> ");
 		if (!input)
 			quit_shell(env);
-		res = parse_input(ft_strdup(input), env);
+		res = parse_input(ft_strdup(input), env, res);
 		handle_parse_res(res, input, env);
 	}
 }

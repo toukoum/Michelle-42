@@ -6,59 +6,29 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/09 18:37:39 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/13 15:28:45 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "minishell.h"
-#include <readline/history.h>
-#include <readline/readline.h>
-
-void	close_pipes(t_data data)
-{
-	int	i;
-
-	i = 0;
-	while (i < data.pipeline_size * 2)
-	{
-		close(data.pipes[i]);
-		i++;
-	}
-}
-
-static int	*create_pipes(int size)
-{
-	int	i;
-	int	*pipes;
-
-	pipes = ft_calloc(size * 2, sizeof(int));
-	i = 0;
-	while (i < size * 2)
-	{
-		pipe(pipes + i);
-		i += 2;
-	}
-	return (pipes);
-}
+#include <sys/wait.h>
 
 static void	child_free(t_data data, t_env *env_list, char ***split)
 {
 	clear_history();
-	free(data.pipes);
+	free_pipes(data);
 	free_split(data.env);
 	free_env_list(env_list);
 	free_split_split(split);
 }
 
-static t_data	init_data(char **env, int size)
+static t_data	init_data(char **env, t_env *env_list, int size)
 {
 	t_data	data;
 
-	data.i = -1;
 	data.pipes = create_pipes(size);
 	data.env = env;
-	data.pipeline_size = size;
+	data.env_list = env_list;
 	return (data);
 }
 
@@ -69,7 +39,7 @@ static int	create_childs(char ***split, char **env, t_env *env_list)
 	int		i;
 
 	i = 0;
-	data = init_data(env, split_split_size(split));
+	data = init_data(env, env_list, split_split_size(split) - 1);
 	while (split[i])
 	{
 		pid = fork();
@@ -77,41 +47,46 @@ static int	create_childs(char ***split, char **env, t_env *env_list)
 			return (0);
 		if (pid == 0)
 		{
-			data.command = split[i];
+			data.cmd = split[i];
 			data.i = i;
 			run_command(data);
 			child_free(data, env_list, split);
-			exit(0);
+			exit(127);
 		}
 		i++;
 	}
 	close_pipes(data);
-	free(data.pipes);
+	free_pipes(data);
 	return (1);
 }
 
-static void	wait_childs(char ***split)
+static int	wait_childs(char ***split)
 {
 	int	i;
+	int	status;
 
 	i = 0;
 	while (split[i])
 	{
-		waitpid(-1, NULL, 0);
+		waitpid(-1, &status, 0);
 		i++;
 	}
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	return (0);
 }
 
 int	exec(char ***split, t_env *env_list)
 {
 	char	**env;
+	int		status;
 
 	if (!split)
 		return (EXIT);
 	env = env_to_split(env_list);
 	create_childs(split, env, env_list);
-	wait_childs(split);
+	status = wait_childs(split);
 	free_split(env);
 	free_split_split(split);
-	return (SUCCESS);
+	return (status);
 }

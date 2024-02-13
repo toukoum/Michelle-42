@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:09:43 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/10 10:59:00 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/13 16:27:21 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,37 @@ static bool	is_empty(char *str)
 	return (true);
 }
 
-int	parse_input(char *input, t_env *env)
+static bool	quote_closed(char *input)
 {
+	int	s_count;
+	int	d_count;
+	int	i;
+
+	s_count = 0;
+	d_count = 0;
+	i = 0;
+	while (input[i])
+	{
+		if (input[i] == '\'')
+			s_count++;
+		if (input[i] == '"')
+			d_count++;
+		i++;
+	}
+	return (s_count % 2 == 0 && d_count % 2 == 0);
+}
+
+int	parse_input(char *input, t_env *env, int res)
+{
+	int		status;
 	char	**split;
 	char	***split_arr;
 
 	if (is_empty(input))
 		return (free(input), EMPTY_INPUT);
-	input = replace_var_names(input, env);
+	if (!quote_closed(input))
+		return (free(input), SYNTAX_ERROR);
+	input = replace_var_names(input, env, res);
 	if (!input)
 		return (EXIT);
 	split = pipe_split(input);
@@ -43,7 +66,8 @@ int	parse_input(char *input, t_env *env)
 		return (EXIT);
 	split_arr = split_split(split);
 	free_split(split);
-	if (exec(split_arr, env) == EXIT)
+	status = exec(split_arr, env);
+	if (status == EXIT)
 		return (free(input), free_split(split), EXIT);
-	return (SUCCESS);
+	return (status);
 }

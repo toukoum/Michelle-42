@@ -91,3 +91,6 @@ push_swap_tester.sh
 push_swap.dSYM
 Push-Swap-Tester
 
+*.o
+*.a
+minishell
