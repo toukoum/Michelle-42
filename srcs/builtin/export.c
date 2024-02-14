@@ -27,6 +27,25 @@ static bool	var_name_valid(char *name)
 	return (true);
 }
 
+static void	set_var(t_env *env, char *name, char *value)
+{
+	t_env	*curr;
+
+	curr = env;
+	while (curr)
+	{
+		if (!ft_strcmp(curr->name, name))
+		{
+			free(curr->value);
+			free(name);
+			curr->value = value;
+			return ;
+		}
+		curr = curr->next;
+	}
+	add_env_node(env, name, value);
+}
+
 static bool	export_valid(char **cmd, t_env *env)
 {
 	char	*name;
@@ -42,7 +61,7 @@ static bool	export_valid(char **cmd, t_env *env)
 	value = ft_substr(cmd[1], ft_strchr(cmd[1], '=') - cmd[1] + 1, ft_strlen(cmd[1]));
 	if (!value)
 		return (free(name), false);
-	add_env_node(env, name, value);
+	set_var(env, name, value);
 	return (true);
 }
 

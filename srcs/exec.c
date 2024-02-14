@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/14 15:55:47 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/14 18:06:52 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,12 @@ int	exec(char ***split, t_env *env_list)
 
 	if (!split)
 		return (EXIT);
+	if (split[0] && split[1] == NULL)
+	{
+		status = main_process_builtin(split[0], env_list);
+		if (status != -1)
+			return (free_split_split(split), status);
+	}
 	env = env_to_split(env_list);
 	create_childs(split, env, env_list);
 	status = wait_childs(split);
