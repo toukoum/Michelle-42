@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/13 19:19:46 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/14 12:01:14 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		**create_pipes(int size);
 
 // BUILTINS
 bool	builtin(char **cmd, t_env *env);
-void	ft_echo(char **cmd);
-void	ft_export(char **cmd, t_env *env);
+int	ft_echo(char **cmd);
+int	ft_export(char **cmd, t_env *env);
 
 #endif
