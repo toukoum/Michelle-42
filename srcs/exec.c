@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/13 19:36:39 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:55:47 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ static int	create_childs(char ***split, char **env, t_env *env_list)
 		{
 			data.cmd = split[i];
 			data.i = i;
-			run_command(data);
+			i = run_command(data);
 			child_free(data, env_list, split);
-			exit(127);
+			exit(i);
 		}
 		i++;
 	}

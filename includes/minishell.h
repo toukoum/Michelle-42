@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/14 12:01:14 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/14 15:50:54 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ t_env	*store_env(char **env);
 t_env	*add_env_node(t_env *head, char *name, char *value);
 
 void	free_env_list(t_env *env);
-void	display_env(t_env *env);
 void	input(t_env *env);
 void	quit_shell(t_env *env);
 void	free_split_split(char ***split);
@@ -69,9 +68,10 @@ int		parse_input(char *input, t_env *env, int res);
 int		split_split_size(char ***split);
 int		**create_pipes(int size);
 
-// BUILTINS
-bool	builtin(char **cmd, t_env *env);
+// BUILTIN
+int	builtin(char **cmd, t_env *env);
 int	ft_echo(char **cmd);
 int	ft_export(char **cmd, t_env *env);
+int	display_env(t_env *env);
 
 #endif

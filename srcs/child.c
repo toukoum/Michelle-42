@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/13 19:19:40 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:04:14 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,21 +97,24 @@ int	run_command(t_data data)
 {
 	char	**no_surr_quotes;
 	char	*path;
+	int		err;
 
 	setup_pipes(data);
 	no_surr_quotes = remove_surrounding_quotes(data.cmd);
-	if (builtin(no_surr_quotes, data.env_list))
-		return (free_split(no_surr_quotes), 1);
+	err = builtin(no_surr_quotes, data.env_list);
+	if (err != -1)
+		return (free_split(no_surr_quotes), err);
 	path = find_path(data);
 	if (!path)
 	{
 		printf("command not found: %s\n", no_surr_quotes[0]);
 		free_split(no_surr_quotes);
-		return (0);
+		return (127);
 	}
-	execve(path, no_surr_quotes, data.env);
+	if (execve(path, no_surr_quotes, data.env) == -1)
+		printf("command failed: %s\n", no_surr_quotes[0]);
 	if (ft_strcmp(path, data.cmd[0]))
 		free(path);
 	free_split(no_surr_quotes);
-	return (1);
+	return (127);
 }
