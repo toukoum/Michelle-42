@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   store_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 21:50:43 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/09 12:56:28 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/14 11:02:14 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,13 @@ static char	*get_env_var_value(char *str)
 	return (new_str);
 }
 
+/**
+ * @brief create a linked list 
+ * with in each node = name / value 
+ * 
+ * @param env list of all environement variable
+ * @return t_env* linked list of the env variable
+ */
 t_env	*store_env(char **env)
 {
 	t_env	*env_list;
