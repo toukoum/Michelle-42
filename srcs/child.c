@@ -6,13 +6,34 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/13 19:19:40 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/15 12:56:25 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 #include <unistd.h>
+
+static char	*remove_last_quote(char *str, char quote)
+{
+	char	*new_str;
+	int		j;
+	int		i;
+
+	i = 0;
+	j = 0;
+	new_str = ft_calloc(ft_strlen(str), sizeof(char));
+	while (str[i])
+	{
+		if (str[i] != quote)
+		{
+			new_str[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	return (new_str);
+}
 
 char	**remove_surrounding_quotes(char **split)
 {
@@ -26,7 +47,7 @@ char	**remove_surrounding_quotes(char **split)
 	while (split[i])
 	{
 		if (split[i][0] == '"' || split[i][0] == '\'')
-			no_surr_quote[i] = ft_substr(split[i], 1, ft_strlen(split[i]) - 2);
+			no_surr_quote[i] = remove_last_quote(split[i], split[i][0]);
 		else
 			no_surr_quote[i] = ft_strdup(split[i]);
 		i++;
