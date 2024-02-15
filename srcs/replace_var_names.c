@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:16:20 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/13 18:11:59 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/15 14:01:03 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static char	*replace_curr_name(char *input, t_env *env, int *i, int res)
 
 	if (input[*i] == '$' && input[*i + 1] == '?'
 		&& (input[*i + 2] == ' ' || !input[*i + 2]
-		|| input[*i + 2] == '"'))
+			|| input[*i + 2] == '"'))
 	{
 		value = ft_itoa(res);
 		replaced = str_replace(input, "$?", value, *i);
