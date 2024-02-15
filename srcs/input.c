@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:09:18 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/13 16:29:20 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:35:34 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	handle_parse_res(int res, char *input, t_env *env)
 		quit_shell(env);
 }
 
-void	input(t_env *env)
+void	input(t_env **env)
 {
 	char	*input;
 	int		res;
@@ -54,8 +54,8 @@ void	input(t_env *env)
 	{
 		input = readline("minishell> ");
 		if (!input)
-			quit_shell(env);
+			quit_shell(*env);
 		res = parse_input(ft_strdup(input), env, res);
-		handle_parse_res(res, input, env);
+		handle_parse_res(res, input, *env);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/14 18:06:52 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:30:46 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static int	wait_childs(char ***split)
 	return (0);
 }
 
-int	exec(char ***split, t_env *env_list)
+int	exec(char ***split, t_env **env_list)
 {
 	char	**env;
 	int		status;
@@ -90,8 +90,8 @@ int	exec(char ***split, t_env *env_list)
 		if (status != -1)
 			return (free_split_split(split), status);
 	}
-	env = env_to_split(env_list);
-	create_childs(split, env, env_list);
+	env = env_to_split(*env_list);
+	create_childs(split, env, *env_list);
 	status = wait_childs(split);
 	free_split(env);
 	free_split_split(split);
