@@ -1,51 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/13 17:25:59 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/14 15:56:37 by ketrevis         ###   ########.fr       */
+/*   Created: 2024/02/14 16:12:51 by ketrevis          #+#    #+#             */
+/*   Updated: 2024/02/14 18:01:41 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
+#include <unistd.h>
 
-static bool	only_n(char *str)
+char	*get_cwd(void)
 {
-	int	i;
+	char	*cwd;
+	int		size;
 
-	i = 0;
-	while (str[i])
+	size = 200;
+	cwd = ft_calloc(size, sizeof(char));
+	if (!cwd)
+		return (NULL);
+	while (!getcwd(cwd, size))
 	{
-		if (str[i] != 'n')
-			return (false);
-		i++;
+		size *= 2;
+		free(cwd);
+		cwd = ft_calloc(size, sizeof(char));
+		if (!cwd)
+			return (NULL);
 	}
-	return (true);
+	return (cwd);
 }
 
-int	ft_echo(char **cmd)
+int	ft_pwd(void)
 {
-	int		i;
-	bool	flag;
+	char	*cwd;
 
-	i = 1;
-	flag = false;
-	while (cmd[i][0] == '-' && only_n(cmd[i] + 1))
-	{
-		flag = true;
-		i++;
-	}
-	while (cmd[i])
-	{
-		printf("%s", cmd[i]);
-		if (cmd[i + 1])
-			printf(" ");
-		i++;
-	}
-	if (!flag)
-		printf("\n");
+	cwd = get_cwd();
+	if (!cwd)
+		return (1);
+	printf("%s\n", cwd);
+	free(cwd);
 	return (0);
 }

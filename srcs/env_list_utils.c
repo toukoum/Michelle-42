@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:07:31 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/09 13:07:50 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:51:14 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,14 @@ void	free_env_list(t_env *env_list)
 	}
 }
 
-void	display_env(t_env *env)
+int	display_env(t_env *env)
 {
 	while (env)
 	{
 		printf("%s=%s\n", env->name, env->value);
 		env = env->next;
 	}
+	return (0);
 }
 
 char	*get_var_value(t_env *head, char *name)
