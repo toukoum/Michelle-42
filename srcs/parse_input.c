@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:09:43 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/15 15:34:16 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:54:02 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ static bool	quote_closed(char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == '\'')
+		if (input[i] == '\'' && d_count % 2 == 0)
 			s_count++;
-		if (input[i] == '"')
+		if (input[i] == '"' && s_count % 2 == 0)
 			d_count++;
 		i++;
 	}
