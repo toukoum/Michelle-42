@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:09:43 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/14 11:21:15 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/15 15:34:16 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static bool	quote_closed(char *input)
 	return (s_count % 2 == 0 && d_count % 2 == 0);
 }
 
-int	parse_input(char *input, t_env *env, int res)
+int	parse_input(char *input, t_env **env, int res)
 {
 	int		status;
 	char	**split;
@@ -57,7 +57,7 @@ int	parse_input(char *input, t_env *env, int res)
 		return (free(input), EMPTY_INPUT);
 	if (!quote_closed(input))
 		return (free(input), SYNTAX_ERROR);
-	input = replace_var_names(input, env, res);
+	input = replace_var_names(input, *env, res);
 	if (!input)
 		return (EXIT);
 	split = pipe_split(input);

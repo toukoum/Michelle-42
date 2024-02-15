@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/15 14:01:42 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:45:20 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ static char	*find_path(t_data data)
 	char	**split;
 	int		i;
 
-	if ((data.cmd[0][0] == '/' || data.cmd[0][0] == '.')
-		&& !access(data.cmd[0], X_OK))
+	if ((!access(data.cmd[0], X_OK)))
 		return (data.cmd[0]);
 	path = get_var_value(data.env_list, "PATH");
 	split = split_add_slashes(path);
