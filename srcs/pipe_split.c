@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 18:20:53 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/09 12:12:26 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/16 16:57:19 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	set_quote(char c, char *quote)
 			*quote = c;
 		return (*quote);
 	}
-	return (0);
+	return (-1);
 }
 
 static int	count_words(char *input)
