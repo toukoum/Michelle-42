@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:50:34 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/13 18:00:06 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/16 09:59:05 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,12 @@ static char	*new_word(char *str, int *i, char *quote)
 	char	*word;
 	int		j;
 
+	if (str[*i] == *quote && str[*i + 1] == *quote)
+	{
+		*i += 2;
+		*quote = 0;
+		return (ft_strdup(""));
+	}
 	word = ft_calloc(word_size(str, *i, *quote) + 1, sizeof(char));
 	if (!word)
 		return (NULL);
