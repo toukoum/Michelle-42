@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:50:34 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/16 09:59:05 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/16 10:19:33 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,11 @@ static int	word_size(char *input, int i, char quote)
 	return (size);
 }
 
+bool	is_quote(char c)
+{
+	return (c == '\'' || c == '"');
+}
+
 static char	*new_word(char *str, int *i, char *quote)
 {
 	char	*word;
@@ -67,6 +72,7 @@ static char	*new_word(char *str, int *i, char *quote)
 		*quote = 0;
 		return (ft_strdup(""));
 	}
+	printf("%s\n", str + *i);
 	word = ft_calloc(word_size(str, *i, *quote) + 1, sizeof(char));
 	if (!word)
 		return (NULL);
@@ -76,6 +82,11 @@ static char	*new_word(char *str, int *i, char *quote)
 		if (str[*i] == ' ' && !*quote)
 			return (word);
 		word[j++] = str[(*i)++];
+		if (str[*i] == *quote || (is_quote(str[*i] && !*quote)))
+		{
+			*quote = 0;
+			return (word);
+		}
 		set_quote(str[*i], quote);
 	}
 	return (word);
@@ -97,7 +108,7 @@ static char	**split_quote(char *str)
 	while (str[i])
 	{
 		set_quote(str[i], &quote);
-		if (str[i] != ' ' && (i == 0 || str[i - 1] == ' '))
+		if (str[i] != ' ' && (i == 0 || str[i - 1] == ' ' || is_quote(str[i - 1])))
 		{
 			split[j++] = new_word(str, &i, &quote);
 			if (!split[j - 1])
