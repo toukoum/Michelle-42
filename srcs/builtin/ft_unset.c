@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:44:59 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/15 16:31:03 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/16 14:19:40 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,23 @@ static void	find_var_name(char *name, t_env **env)
 	t_env	*tmp;
 
 	curr = *env;
+	if (curr && !ft_strcmp(curr->name, name))
+	{
+		*env = curr->next;
+		free(curr->name);
+		free(curr->value);
+		free(curr);
+		return ;
+	}
 	while (curr)
 	{
-		tmp = curr;
-		if (!ft_strcmp(curr->name, name))
+		if (curr->next && !ft_strcmp(curr->next->name, name))
 		{
-			tmp->next = curr->next;
-			if (curr == *env)
-				*env = curr->next;
-			free(curr->name);
-			free(curr->value);
-			free(curr);
+			tmp = curr->next;
+			curr->next = curr->next->next;
+			free(tmp->name);
+			free(tmp->value);
+			free(tmp);
 			return ;
 		}
 		curr = curr->next;
