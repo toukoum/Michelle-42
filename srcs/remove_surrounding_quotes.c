@@ -6,28 +6,27 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:01:31 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/15 14:01:38 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/16 17:07:29 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*remove_last_quote(char *str, char quote)
+static char	*remove_quotes(char *str)
 {
 	char	*new_str;
+	char	quote;
 	int		j;
 	int		i;
 
 	i = 0;
 	j = 0;
+	quote = 0;
 	new_str = ft_calloc(ft_strlen(str), sizeof(char));
 	while (str[i])
 	{
-		if (str[i] != quote)
-		{
-			new_str[j] = str[i];
-			j++;
-		}
+		if (set_quote(str[i], &quote) && str[i] != quote)
+			new_str[j++] = str[i];
 		i++;
 	}
 	return (new_str);
@@ -44,10 +43,7 @@ char	**remove_surrounding_quotes(char **split)
 	i = 0;
 	while (split[i])
 	{
-		if (split[i][0] == '"' || split[i][0] == '\'')
-			no_surr_quote[i] = remove_last_quote(split[i], split[i][0]);
-		else
-			no_surr_quote[i] = ft_strdup(split[i]);
+		no_surr_quote[i] = remove_quotes(split[i]);
 		i++;
 	}
 	return (no_surr_quote);
