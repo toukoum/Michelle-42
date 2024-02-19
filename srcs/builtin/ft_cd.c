@@ -6,38 +6,68 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:11:45 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/19 11:36:12 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:16:38 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <unistd.h>
 
-int	ft_cd(char **cmd, t_env **env)
+static int	update_env(t_env **env, char *old_pwd)
 {
-	char	*cwd;
-
-	cwd = NULL;
-	cwd = getcwd(cwd, 0);
-	if (!cwd)
+	if (!static_cwd(UPDATE))
+		return (free(old_pwd), 1);
+	if (set_var(env, ft_strdup("OLDPWD"), old_pwd))
 		return (1);
+	if (set_var(env, ft_strdup("PWD"), getcwd(NULL, 0)))
+		return (1);
+	return (0);
+}
+
+static int	no_args(char **cmd, t_env **env, char *old_pwd)
+{
 	if (!cmd[1])
 	{
-		free(cwd);
 		if (chdir(get_var_value(*env, "HOME")) == -1)
-			return (perror(""), 1);
+			return (free(old_pwd), perror(""), 1);
+		if (update_env(env, old_pwd))
+			return (1);
 		return (0);
 	}
-	if (chdir(cmd[1]) == -1)
-		return (free(cwd), perror(""), 1);
-	static_cwd(UPDATE);
-	if (set_var(env, ft_strdup("OLDPWD"), cwd))
-		return (free(cwd), 1);
-	cwd = NULL;
-	cwd = getcwd(cwd, 0);
-	if (!cwd)
+	return (-1);
+}
+
+static int	goto_oldpwd(char **cmd, t_env **env, char *old_pwd)
+{
+	if (!ft_strcmp(cmd[1], "-"))
+	{
+		if (chdir(get_var_value(*env, "OLDPWD")) == -1)
+			return (free(old_pwd), perror(""), 1);
+		if (update_env(env, old_pwd))
+			return (1);
+		return (0);
+	}
+	return (-1);
+}
+
+int	ft_cd(char **cmd, t_env **env)
+{
+	char	*old_pwd;
+	int		res;
+
+	old_pwd = getcwd(NULL, 0);
+	if (!old_pwd)
 		return (1);
-	if (set_var(env, ft_strdup("PWD"), cwd))
-		return (free(cwd), 1);
+	res = no_args(cmd, env, old_pwd);
+	if (res != -1)
+		return (res);
+	printf("Test\n");
+	res = goto_oldpwd(cmd, env, old_pwd);
+	if (res != -1)
+		return (res);
+	if (chdir(cmd[1]) == -1)
+		return (free(old_pwd), perror(""), 1);
+	if (update_env(env, old_pwd))
+		return (1);
 	return (0);
 }

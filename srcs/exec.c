@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/15 15:30:46 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:44:04 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	child_free(t_data data, t_env *env_list, char ***split)
 	free_split(data.env);
 	free_env_list(env_list);
 	free_split_split(split);
+	static_cwd(FREE);
 }
 
 static t_data	init_data(char **env, t_env *env_list, int size)
