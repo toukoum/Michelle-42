@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/19 11:35:33 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:31:35 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ typedef struct s_data
 
 enum e_input_parse_ret
 {
-	SYNTAX_ERROR = -3,
+	EXIT = -3,
 	EMPTY_INPUT = -2,
-	EXIT = -1,
+	SYNTAX_ERROR = -1,
 };
 
 enum e_cwd_action
