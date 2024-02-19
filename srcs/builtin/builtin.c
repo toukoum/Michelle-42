@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:29:22 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/15 16:22:10 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:30:55 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ int	builtin(char **cmd, t_env *env)
 		return (ft_export(cmd, &env));
 	if (!ft_strcmp(cmd[0], "cd"))
 		return (ft_cd(cmd, &env));
+	if (!ft_strcmp(cmd[0], "unset"))
+		return (ft_unset(cmd, &env));
+	if (!ft_strcmp(cmd[0], "exit"))
+		return (quit_shell(env), 0);
 	return (-1);
 }
 
@@ -44,6 +48,8 @@ int	main_process_builtin(char **cmd, t_env **env)
 		status = ft_export(cmd, env);
 	else if (!ft_strcmp(no_surr_quotes[0], "unset"))
 		status = ft_unset(cmd, env);
+	else if (!ft_strcmp(no_surr_quotes[0], "exit"))
+		status = EXIT;
 	free_split(no_surr_quotes);
 	return (status);
 }

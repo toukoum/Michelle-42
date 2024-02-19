@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/15 15:52:27 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:31:35 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,16 @@ typedef struct s_data
 
 enum e_input_parse_ret
 {
-	SYNTAX_ERROR = -3,
+	EXIT = -3,
 	EMPTY_INPUT = -2,
-	EXIT = -1,
+	SYNTAX_ERROR = -1,
+};
+
+enum e_cwd_action
+{
+	NOTHING,
+	UPDATE,
+	FREE,
 };
 
 t_env	*store_env(char **env);
@@ -69,7 +76,7 @@ int		split_split_size(char ***split);
 int		**create_pipes(int size);
 
 // BUILTIN
-char	*get_cwd(void);
+char	*static_cwd(int action);
 int		builtin(char **cmd, t_env *env);
 int		ft_echo(char **cmd);
 int		ft_export(char **cmd, t_env **env);
