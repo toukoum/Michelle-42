@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:09:18 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/15 15:35:34 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:37:33 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	quit_shell(t_env *env)
 	printf("exit\n");
 	free_env_list(env);
 	rl_clear_history();
+	static_cwd(FREE);
 	exit(0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:11:45 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/17 00:18:52 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:36:12 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	ft_cd(char **cmd, t_env **env)
 {
 	char	*cwd;
 
-	cwd = get_cwd();
+	cwd = NULL;
+	cwd = getcwd(cwd, 0);
 	if (!cwd)
 		return (1);
 	if (!cmd[1])
@@ -29,9 +30,11 @@ int	ft_cd(char **cmd, t_env **env)
 	}
 	if (chdir(cmd[1]) == -1)
 		return (free(cwd), perror(""), 1);
+	static_cwd(UPDATE);
 	if (set_var(env, ft_strdup("OLDPWD"), cwd))
 		return (free(cwd), 1);
-	cwd = get_cwd();
+	cwd = NULL;
+	cwd = getcwd(cwd, 0);
 	if (!cwd)
 		return (1);
 	if (set_var(env, ft_strdup("PWD"), cwd))
