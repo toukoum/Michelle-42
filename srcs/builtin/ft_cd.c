@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:11:45 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/19 12:16:38 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:25:23 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,6 @@ static int	no_args(char **cmd, t_env **env, char *old_pwd)
 	return (-1);
 }
 
-static int	goto_oldpwd(char **cmd, t_env **env, char *old_pwd)
-{
-	if (!ft_strcmp(cmd[1], "-"))
-	{
-		if (chdir(get_var_value(*env, "OLDPWD")) == -1)
-			return (free(old_pwd), perror(""), 1);
-		if (update_env(env, old_pwd))
-			return (1);
-		return (0);
-	}
-	return (-1);
-}
-
 int	ft_cd(char **cmd, t_env **env)
 {
 	char	*old_pwd;
@@ -59,10 +46,6 @@ int	ft_cd(char **cmd, t_env **env)
 	if (!old_pwd)
 		return (1);
 	res = no_args(cmd, env, old_pwd);
-	if (res != -1)
-		return (res);
-	printf("Test\n");
-	res = goto_oldpwd(cmd, env, old_pwd);
 	if (res != -1)
 		return (res);
 	if (chdir(cmd[1]) == -1)
