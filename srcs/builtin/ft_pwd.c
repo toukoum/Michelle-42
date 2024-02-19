@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 16:12:51 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/14 18:01:41 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/17 00:15:50 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,11 @@
 char	*get_cwd(void)
 {
 	char	*cwd;
-	int		size;
 
-	size = 200;
-	cwd = ft_calloc(size, sizeof(char));
+	cwd = NULL;
+	cwd = getcwd(cwd, 0);
 	if (!cwd)
 		return (NULL);
-	while (!getcwd(cwd, size))
-	{
-		size *= 2;
-		free(cwd);
-		cwd = ft_calloc(size, sizeof(char));
-		if (!cwd)
-			return (NULL);
-	}
 	return (cwd);
 }
 
