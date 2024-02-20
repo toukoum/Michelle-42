@@ -6,32 +6,12 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:50:34 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/16 15:56:28 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:29:07 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
-
-static int	count_words(char *str)
-{
-	int		i;
-	int		words;
-	char	quote;
-
-	i = 0;
-	words = 0;
-	quote = 0;
-	while (str[i])
-	{
-		if (set_quote(str[i], &quote))
-			words++;
-		if (!quote && str[i] != ' ' && (i == 0 || str[i - 1] == ' '))
-			words++;
-		i++;
-	}
-	return (words);
-}
 
 static int	word_size(char *input, int i, char quote)
 {
@@ -56,11 +36,28 @@ static int	word_size(char *input, int i, char quote)
 	return (size);
 }
 
+static char	*stock_redictors(char *str, int *i)
+{
+	char	*new_str;
+	int		j;
+
+	j = *i;
+	while (str[j] && is_redirector(str[j]))
+		j++;
+	new_str = ft_calloc(j + 1, sizeof(char));
+	j = 0;
+	while (str[*i] && is_redirector(str[*i]))
+		new_str[j++] = str[(*i)++];
+	return (new_str);
+}
+
 static char	*new_word(char *str, int *i, char *quote)
 {
 	char	*word;
 	int		j;
 
+	if (is_redirector(str[*i]))
+		return (stock_redictors(str, i));
 	if (str[*i] == *quote && str[*i + 1] == *quote)
 	{
 		*i += 2;
@@ -73,7 +70,7 @@ static char	*new_word(char *str, int *i, char *quote)
 	j = 0;
 	while (str[*i])
 	{
-		if (str[*i] == ' ' && !*quote)
+		if (!*quote && (str[*i] == ' ' || is_redirector(str[*i])))
 			return (word);
 		word[j++] = str[(*i)++];
 		set_quote(str[*i], quote);
@@ -97,13 +94,14 @@ static char	**split_quote(char *str)
 	while (str[i])
 	{
 		set_quote(str[i], &quote);
-		if (str[i] != ' ' && (i == 0 || str[i - 1] == ' '))
+		if ((str[i] != ' ' && (space_before(str, i)
+					|| is_redirector(str[i - 1]))) || (is_redirector(str[i])))
 		{
 			split[j++] = new_word(str, &i, &quote);
 			if (!split[j - 1])
 				return (free_split(split), NULL);
 		}
-		if (str[i])
+		if (str[i] && str[i] == ' ')
 			i++;
 	}
 	return (split);
