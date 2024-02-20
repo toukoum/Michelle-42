@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/15 16:45:20 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:54:41 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,13 @@ int	run_command(t_data data)
 	char	*path;
 	int		err;
 
+	data.save_stdout = dup(STDOUT_FILENO);
 	setup_pipes(data);
+	redirection(&data);
 	no_surr_quotes = remove_surrounding_quotes(data.cmd);
 	err = builtin(no_surr_quotes, data.env_list);
 	if (err != -1)
-		return (free_split(no_surr_quotes), err);
+		return (dup2(data.save_stdout, STDOUT_FILENO), free_split(no_surr_quotes), err);
 	path = find_path(data);
 	if (!path)
 	{

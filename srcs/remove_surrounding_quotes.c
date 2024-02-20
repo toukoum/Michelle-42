@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_surrounding_quotes.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:01:31 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/16 17:07:29 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:11:01 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	*remove_quotes(char *str)
 	i = 0;
 	j = 0;
 	quote = 0;
-	new_str = ft_calloc(ft_strlen(str), sizeof(char));
+	new_str = ft_calloc(ft_strlen(str) + 1, sizeof(char));
 	while (str[i])
 	{
 		if (set_quote(str[i], &quote) && str[i] != quote)
