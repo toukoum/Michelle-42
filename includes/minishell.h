@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/20 18:26:04 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:41:12 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	input(t_env **env);
 void	quit_shell(t_env *env);
 void	free_split_split(char ***split);
 void	close_pipes(t_data data);
-void	free_pipes(t_data data);
+void	free_pipes(int **pipes);
 
 char	*str_replace(char *str, char *old, char *new, int old_index);
 char	*get_var_value(t_env *head, char *name);

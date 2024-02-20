@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 18:20:53 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/16 16:57:19 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:36:57 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	set_quote(char c, char *quote)
 	return (-1);
 }
 
-static int	count_words(char *input)
+static int	pipe_count_words(char *input)
 {
 	int		i;
 	int		words;
@@ -97,7 +97,7 @@ char	**pipe_split(char *input)
 	i = 0;
 	j = 0;
 	quote = 0;
-	split = ft_calloc(count_words(input) + 1, sizeof(char *));
+	split = ft_calloc(pipe_count_words(input) + 1, sizeof(char *));
 	if (!split)
 		return (free(input), NULL);
 	while (input[i])
