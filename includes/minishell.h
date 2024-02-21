@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/20 18:41:12 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/21 11:13:02 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ typedef struct s_data
 
 enum e_input_parse_ret
 {
-	EXIT = -3,
-	EMPTY_INPUT = -2,
+	EXIT = -2,
 	SYNTAX_ERROR = -1,
 };
 
@@ -62,7 +61,7 @@ void	free_pipes(int **pipes);
 
 char	*str_replace(char *str, char *old, char *new, int old_index);
 char	*get_var_value(t_env *head, char *name);
-char	*replace_var_names(char *input, t_env *env, int res);
+char	*replace_var_names(char *input, t_env *env, unsigned char res);
 char	**pipe_split(char *input);
 char	**env_to_split(t_env *head);
 char	**remove_surrounding_quotes(char **split);
@@ -71,7 +70,7 @@ char	***split_split(char **pipe_split);
 int		run_command(t_data data);
 int		exec(char ***split_split, t_env **env);
 int		set_quote(char c, char *quote);
-int		parse_input(char *input, t_env **env, int res);
+int		parse_input(char *input, t_env **env, unsigned char res);
 int		split_split_size(char ***split);
 int		**create_pipes(int size);
 int		count_words(char *str);

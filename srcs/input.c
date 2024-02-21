@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:09:18 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/21 10:51:57 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/21 11:13:37 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ static void	catch_sigint(int sig)
 
 static void	handle_parse_res(int res, char *input, t_env *env)
 {
-	if (res != EMPTY_INPUT)
-		add_history(input);
+	add_history(input);
 	if (res == SYNTAX_ERROR)
 		printf("syntax error\n");
 	free(input);
@@ -42,9 +41,25 @@ static void	handle_parse_res(int res, char *input, t_env *env)
 		quit_shell(env);
 }
 
+static bool	is_empty(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ' && str[i] != '\t' && str[i] != '\n'
+			&& str[i] != '\v' && str[i] != '\f' && str[i] != '\r')
+			return (false);
+		i++;
+	}
+	free(str);
+	return (true);
+}
+
 void	input(t_env **env)
 {
-	char	*input;
+	char			*input;
 	unsigned char	res;
 
 	signal(SIGINT, catch_sigint);
@@ -55,6 +70,8 @@ void	input(t_env **env)
 		input = readline("minishell> ");
 		if (!input)
 			quit_shell(*env);
+		if (is_empty(input))
+			continue ;
 		res = parse_input(ft_strdup(input), env, res);
 		handle_parse_res(res, input, *env);
 	}

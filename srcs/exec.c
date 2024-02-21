@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/21 10:54:33 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/21 11:03:13 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static t_data	init_data(char **env, t_env *env_list, int size)
 	data.pipes = create_pipes(size);
 	data.env = env;
 	data.env_list = env_list;
+	data.i = 0;
 	return (data);
 }
 
@@ -38,26 +39,24 @@ static int	create_childs(char ***split, char **env, t_env *env_list)
 {
 	pid_t	pid;
 	t_data	data;
-	int		i;
 
-	i = 0;
+	data.i = 0;
 	data = init_data(env, env_list, split_split_size(split) - 1);
 	if (!data.pipes)
 		return (-1);
-	while (split[i])
+	while (split[data.i])
 	{
 		pid = fork();
 		if (pid == -1)
-			return (0);
+			return (-1);
 		if (pid == 0)
 		{
-			data.cmd = split[i];
-			data.i = i;
-			i = run_command(data);
+			data.cmd = split[data.i];
+			data.i = run_command(data);
 			child_free(data, env_list, split);
-			exit(i);
+			exit(data.i);
 		}
-		i++;
+		data.i++;
 	}
 	close_pipes(data);
 	free_pipes(data.pipes);
