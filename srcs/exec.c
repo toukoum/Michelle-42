@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/20 19:03:50 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:33:46 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static t_data	init_data(char **env, t_env *env_list, int size)
 	data.pipes = create_pipes(size);
 	data.env = env;
 	data.env_list = env_list;
+	data.i = 0;
 	return (data);
 }
 
@@ -38,26 +39,24 @@ static int	create_childs(char ***split, char **env, t_env *env_list)
 {
 	pid_t	pid;
 	t_data	data;
-	int		i;
 
-	i = 0;
+	data.i = 0;
 	data = init_data(env, env_list, split_split_size(split) - 1);
 	if (!data.pipes)
 		return (-1);
-	while (split[i])
+	while (split[data.i])
 	{
 		pid = fork();
 		if (pid == -1)
-			return (0);
+			return (-1);
 		if (pid == 0)
 		{
-			data.cmd = split[i];
-			data.i = i;
-			i = run_command(data);
+			data.cmd = split[data.i];
+			data.i = run_command(data);
 			child_free(data, env_list, split);
-			exit(i);
+			exit(data.i);
 		}
-		i++;
+		data.i++;
 	}
 	close_pipes(data);
 	free_pipes(data.pipes);
@@ -70,13 +69,23 @@ static int	wait_childs(char ***split)
 	int	status;
 
 	i = 0;
+	signal(SIGINT, SIG_IGN);
 	while (split[i])
 	{
 		waitpid(-1, &status, 0);
 		i++;
 	}
+	signal(SIGINT, catch_sigint);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+	{
+		status = WTERMSIG(status);
+		if (status != 131)
+			status += 128;
+		printf("\n");
+		return (status);
+	}
 	return (0);
 }
 
@@ -90,11 +99,10 @@ int	exec(char ***split, t_env **env_list)
 	if (split[0] && split[1] == NULL)
 	{
 		status = main_process_builtin(split[0], env_list);
-		if (status == EXIT)
-		{
-			free_split_split(split);
-			quit_shell(*env_list);
-		}
+		status = handle_exit_code(status, split, *env_list);
+		if (!ft_strcmp(split[0][0], "exit") && (!is_exit_error(status)))
+			return (free_split_split(split), free_env_list(*env_list),
+				static_cwd(FREE), exit(status), 0);
 		if (status != -1)
 			return (free_split_split(split), status);
 	}
