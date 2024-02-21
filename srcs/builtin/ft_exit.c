@@ -6,32 +6,25 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:51:03 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/21 14:34:10 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:50:15 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 
-bool	is_exit_error(int exit_code)
+bool	can_quit_shell(char **cmd, int *exit_code)
 {
-	return (exit_code == INVALID_ARG || exit_code == TOO_MANY_ARGS);
-}
-
-int	handle_exit_code(int exit_code, char ***split, t_env *env_list)
-{
-	if (!is_exit_error(exit_code))
-		return (exit_code);
-	if (exit_code == TOO_MANY_ARGS)
-		return (1);
-	if (exit_code == INVALID_ARG)
+	if (ft_strcmp(cmd[0], "exit"))
+		return (false);
+	if (*exit_code == TOO_MANY_ARGS)
 	{
-		free_split_split(split);
-		free_env_list(env_list);
-		static_cwd(FREE);
-		exit(2);
+		*exit_code = 1;
+		return (false);
 	}
-	return (0);
+	if (*exit_code == INVALID_ARG)
+		*exit_code = 2;
+	return (true);
 }
 
 static int	get_exit_code(char *str)
