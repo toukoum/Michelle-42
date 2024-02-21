@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:09:18 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/21 11:13:37 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/21 12:26:20 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	quit_shell(t_env *env)
 	exit(0);
 }
 
-static void	catch_sigint(int sig)
+void	catch_sigint(int sig)
 {
 	(void)sig;
 	printf("\n");

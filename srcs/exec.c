@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/21 11:03:13 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/21 12:27:12 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static int	wait_childs(char ***split)
 	int	status;
 
 	i = 0;
+	signal(SIGINT, SIG_IGN);
 	while (split[i])
 	{
 		waitpid(-1, &status, 0);
@@ -81,6 +82,10 @@ static int	wait_childs(char ***split)
 		status = WTERMSIG(status);
 		if (status != 131)
 			status += 128;
+		if (status >= 255)
+			status = 255;
+		printf("\n");
+		signal(SIGINT, catch_sigint);
 		return (status);
 	}
 	return (0);
