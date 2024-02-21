@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/19 12:32:10 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/21 10:54:33 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,13 @@ static int	wait_childs(char ***split)
 	}
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
+	if (WIFSIGNALED(status))
+	{
+		status = WTERMSIG(status);
+		if (status != 131)
+			status += 128;
+		return (status);
+	}
 	return (0);
 }
 
