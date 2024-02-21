@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:09:18 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/21 12:26:20 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/21 12:34:42 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,16 @@ void	catch_sigint(int sig)
 	rl_redisplay();
 }
 
-static void	handle_parse_res(int res, char *input, t_env *env)
+static void	handle_parse_res(int *res, char *input, t_env *env)
 {
 	add_history(input);
-	if (res == SYNTAX_ERROR)
+	if (*res == SYNTAX_ERROR)
+	{
 		printf("syntax error\n");
+		*res = 1;
+	}
 	free(input);
-	if (res == EXIT)
+	if (*res == EXIT)
 		quit_shell(env);
 }
 
@@ -60,7 +63,7 @@ static bool	is_empty(char *str)
 void	input(t_env **env)
 {
 	char			*input;
-	unsigned char	res;
+	int				res;
 
 	signal(SIGINT, catch_sigint);
 	signal(SIGQUIT, SIG_IGN);
@@ -73,6 +76,6 @@ void	input(t_env **env)
 		if (is_empty(input))
 			continue ;
 		res = parse_input(ft_strdup(input), env, res);
-		handle_parse_res(res, input, *env);
+		handle_parse_res(&res, input, *env);
 	}
 }
