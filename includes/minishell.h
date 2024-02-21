@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/21 14:34:00 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:52:42 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_env	*add_env_node(t_env *head, char *name, char *value);
 
 void	free_env_list(t_env *env);
 void	input(t_env **env);
-void	quit_shell(t_env *env);
+void	quit_shell(t_env *env, unsigned char exit_code);
 void	free_split_split(char ***split);
 void	close_pipes(t_data data);
 void	free_pipes(int **pipes);
@@ -78,7 +78,6 @@ int		parse_input(char *input, t_env **env, int *res);
 int		split_split_size(char ***split);
 int		**create_pipes(int size);
 int		count_words(char *str);
-int		handle_exit_code(int exit_code, char ***split, t_env *env_list);
 
 bool	is_redirector(char c);
 bool	space_before(char *str, int i);
@@ -95,6 +94,7 @@ int		main_process_builtin(char **cmd, t_env **env);
 int		set_var(t_env **env, char *name, char *value);
 int		ft_unset(char **cmd, t_env **env);
 int		ft_exit(char **no_surr_quotes);
-bool	is_exit_error(int exit_code);
+int		handle_exit_code(int exit_code);
+bool	can_quit_shell(char **cmd, int *exit_code);
 
 #endif

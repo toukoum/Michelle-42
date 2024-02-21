@@ -6,18 +6,18 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:09:18 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/21 12:45:44 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:53:25 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	quit_shell(t_env *env)
+void	quit_shell(t_env *env, unsigned char exit_code)
 {
 	free_env_list(env);
 	rl_clear_history();
 	static_cwd(FREE);
-	exit(0);
+	exit(exit_code);
 }
 
 void	catch_sigint(int sig)
@@ -39,7 +39,7 @@ static void	handle_parse_res(int *res, char *input, t_env *env)
 	}
 	free(input);
 	if (*res == EXIT)
-		quit_shell(env);
+		quit_shell(env, 0);
 }
 
 static bool	is_empty(char *str)
@@ -70,7 +70,7 @@ void	input(t_env **env)
 	{
 		input = readline("minishell> ");
 		if (!input)
-			quit_shell(*env);
+			quit_shell(*env, 0);
 		if (is_empty(input))
 			continue ;
 		res = parse_input(ft_strdup(input), env, &res);
