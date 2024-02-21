@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/21 12:32:13 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:29:40 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,6 @@ static int	wait_childs(char ***split)
 		status = WTERMSIG(status);
 		if (status != 131)
 			status += 128;
-		if (status >= 255)
-			status = 255;
 		printf("\n");
 		return (status);
 	}
@@ -101,11 +99,11 @@ int	exec(char ***split, t_env **env_list)
 	if (split[0] && split[1] == NULL)
 	{
 		status = main_process_builtin(split[0], env_list);
-		if (status == EXIT)
-		{
-			free_split_split(split);
-			quit_shell(*env_list);
-		}
+		status = handle_exit_code(status, split, *env_list);
+		if (!ft_strcmp(split[0][0], "exit") &&
+				(status != INVALID_ARG || status != TOO_MANY_ARGS))
+			return (free_split_split(split), free_env_list(*env_list),
+				static_cwd(FREE), exit(status), 0);
 		if (status != -1)
 			return (free_split_split(split), status);
 	}

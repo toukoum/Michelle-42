@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/21 12:26:27 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:30:10 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,15 @@ typedef struct s_data
 	int		i;
 }	t_data;
 
-enum e_input_parse_ret
-{
-	EXIT = -2,
-	SYNTAX_ERROR = -1,
-};
+// exit return value
+# define TOO_MANY_ARGS -4
+# define INVALID_ARG -3
 
+// parse_input return value
+# define EXIT -2
+# define SYNTAX_ERROR -1
+
+// get_cwd action parameter
 enum e_cwd_action
 {
 	NOTHING,
@@ -71,10 +74,11 @@ char	***split_split(char **pipe_split);
 int		run_command(t_data data);
 int		exec(char ***split_split, t_env **env);
 int		set_quote(char c, char *quote);
-int		parse_input(char *input, t_env **env, unsigned char res);
+int		parse_input(char *input, t_env **env, int *res);
 int		split_split_size(char ***split);
 int		**create_pipes(int size);
 int		count_words(char *str);
+int		handle_exit_code(int exit_code, char ***split, t_env *env_list);
 
 bool	is_redirector(char c);
 bool	space_before(char *str, int i);
@@ -90,5 +94,6 @@ int		ft_cd(char **cmd, t_env **env);
 int		main_process_builtin(char **cmd, t_env **env);
 int		set_var(t_env **env, char *name, char *value);
 int		ft_unset(char **cmd, t_env **env);
+int		ft_exit(char **no_surr_quotes);
 
 #endif

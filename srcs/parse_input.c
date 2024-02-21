@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:09:43 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/21 11:12:55 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/21 12:39:35 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static bool	quote_closed(char *input)
 	return (s_count % 2 == 0 && d_count % 2 == 0);
 }
 
-int	parse_input(char *input, t_env **env, unsigned char res)
+int	parse_input(char *input, t_env **env, int *res)
 {
 	int		status;
 	char	**split;
@@ -40,7 +40,7 @@ int	parse_input(char *input, t_env **env, unsigned char res)
 
 	if (!quote_closed(input))
 		return (free(input), SYNTAX_ERROR);
-	input = replace_var_names(input, *env, res);
+	input = replace_var_names(input, *env, *res);
 	if (!input)
 		return (EXIT);
 	split = pipe_split(input);

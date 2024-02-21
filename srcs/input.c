@@ -6,13 +6,11 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:09:18 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/21 12:34:42 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/21 12:45:44 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <readline/history.h>
-#include <readline/readline.h>
 
 void	quit_shell(t_env *env)
 {
@@ -75,7 +73,7 @@ void	input(t_env **env)
 			quit_shell(*env);
 		if (is_empty(input))
 			continue ;
-		res = parse_input(ft_strdup(input), env, res);
+		res = parse_input(ft_strdup(input), env, &res);
 		handle_parse_res(&res, input, *env);
 	}
 }
