@@ -16,7 +16,6 @@
 
 void	quit_shell(t_env *env)
 {
-	printf("exit\n");
 	free_env_list(env);
 	rl_clear_history();
 	static_cwd(FREE);

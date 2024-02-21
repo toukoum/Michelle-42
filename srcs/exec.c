@@ -17,7 +17,7 @@
 static void	child_free(t_data data, t_env *env_list, char ***split)
 {
 	clear_history();
-	free_pipes(data);
+	free_pipes(data.pipes);
 	free_split(data.env);
 	free_env_list(env_list);
 	free_split_split(split);
@@ -42,6 +42,8 @@ static int	create_childs(char ***split, char **env, t_env *env_list)
 
 	i = 0;
 	data = init_data(env, env_list, split_split_size(split) - 1);
+	if (!data.pipes)
+		return (-1);
 	while (split[i])
 	{
 		pid = fork();
@@ -58,7 +60,7 @@ static int	create_childs(char ***split, char **env, t_env *env_list)
 		i++;
 	}
 	close_pipes(data);
-	free_pipes(data);
+	free_pipes(data.pipes);
 	return (1);
 }
 
@@ -104,7 +106,8 @@ int	exec(char ***split, t_env **env_list)
 			return (free_split_split(split), status);
 	}
 	env = env_to_split(*env_list);
-	create_childs(split, env, *env_list);
+	if (create_childs(split, env, *env_list) == -1)
+		return (free_split(env), free_split_split(split), EXIT);
 	status = wait_childs(split);
 	free_split(env);
 	free_split_split(split);

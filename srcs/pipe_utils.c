@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 12:10:55 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/13 12:11:32 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/20 18:41:40 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ void	close_pipes(t_data data)
 	}
 }
 
-void	free_pipes(t_data data)
+void	free_pipes(int **pipes)
 {
 	int	i;
 
 	i = 0;
-	while (data.pipes[i])
+	while (pipes[i])
 	{
-		free(data.pipes[i]);
+		free(pipes[i]);
 		i++;
 	}
-	free(data.pipes);
+	free(pipes);
 }
 
 int	**create_pipes(int size)
@@ -44,10 +44,14 @@ int	**create_pipes(int size)
 	int	**pipes;
 
 	pipes = ft_calloc(size + 1, sizeof(int *));
+	if (!pipes)
+		return (NULL);
 	i = 0;
 	while (i < size)
 	{
 		pipes[i] = ft_calloc(2, sizeof(int));
+		if (!pipes[i])
+			return (free_pipes(pipes), NULL);
 		pipe(pipes[i]);
 		i++;
 	}
