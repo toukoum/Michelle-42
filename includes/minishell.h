@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/21 14:30:10 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:34:00 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ int		main_process_builtin(char **cmd, t_env **env);
 int		set_var(t_env **env, char *name, char *value);
 int		ft_unset(char **cmd, t_env **env);
 int		ft_exit(char **no_surr_quotes);
+bool	is_exit_error(int exit_code);
 
 #endif
