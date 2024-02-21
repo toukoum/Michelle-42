@@ -6,13 +6,13 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:01:31 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/20 16:11:01 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/21 15:31:49 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*remove_quotes(char *str)
+char	*remove_quotes(char *str)
 {
 	char	*new_str;
 	char	quote;

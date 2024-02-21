@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/19 12:54:41 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/21 18:11:21 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,9 @@ int	run_command(t_data data)
 
 	data.save_stdout = dup(STDOUT_FILENO);
 	setup_pipes(data);
-	redirection(&data);
+
+	data.cmd = redirection(&data);
+	
 	no_surr_quotes = remove_surrounding_quotes(data.cmd);
 	err = builtin(no_surr_quotes, data.env_list);
 	if (err != -1)
