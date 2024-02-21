@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:58:33 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/19 12:13:33 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/21 16:06:05 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ static bool	export_valid(char **cmd, t_env **env)
 
 int	ft_export(char **cmd, t_env **env)
 {
+	if (!cmd[1])
+		return (1);
 	if (!export_valid(cmd, env))
 		return (1);
 	return (0);
