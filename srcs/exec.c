@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/21 14:54:06 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:39:45 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,11 @@ int	exec(char ***split, t_env **env_list)
 
 	if (!split)
 		return (EXIT);
+	if (!split[0])
+	{
+		printf("syntax error near unexpected token '|'\n");
+		return (free(split), 2);
+	}
 	if (split[0] && split[1] == NULL)
 	{
 		status = main_process_builtin(split[0], env_list);
