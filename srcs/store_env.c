@@ -6,17 +6,11 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 21:50:43 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/21 16:38:07 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:46:38 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// (address of '=') - (address of str beginning) = index of '='
-static char	*get_env_var_name(char *str)
-{
-	return (ft_substr(str, 0, ft_strchr(str, '=') - str));
-}
 
 static char	*get_env_var_value(char *str)
 {
@@ -29,6 +23,17 @@ static char	*get_env_var_value(char *str)
 	i++;
 	new_str = ft_strdup(str + i);
 	return (new_str);
+}
+
+static t_env	*basic_env()
+{
+	t_env	*env;
+
+	env = NULL;
+	env = add_env_node(env, ft_strdup(static_cwd(NOTHING)), ft_strdup("PWD"));
+	env = add_env_node(env, ft_itoa(1), ft_strdup("SHLVL"));
+	env = add_env_node(env, ft_strdup("/usr/bin/env"), ft_strdup("_"));
+	return (env);
 }
 
 /**
@@ -45,10 +50,12 @@ t_env	*store_env(char **env)
 
 	i = 0;
 	env_list = NULL;
+	if (!env[0])
+		return (basic_env());
 	while (env[i])
 	{
-		env_list = add_env_node(env_list, get_env_var_name(env[i]),
-				get_env_var_value(env[i]));
+		env_list = add_env_node(env_list, get_env_var_value(env[i]),
+				ft_substr(env[i], 0, ft_strchr(env[i], '=') - env[i]));
 		if (!env_list)
 			return (NULL);
 		i++;
@@ -68,7 +75,7 @@ static char	*increment_shlvl(char *name, char *value)
 	return (value);
 }
 
-t_env	*add_env_node(t_env *head, char *name, char *value)
+t_env	*add_env_node(t_env *head, char *value, char *name)
 {
 	t_env	*new;
 	t_env	*curr;
