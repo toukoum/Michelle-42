@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 21:50:43 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/22 18:46:38 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/22 18:49:35 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*get_env_var_value(char *str)
 	return (new_str);
 }
 
-static t_env	*basic_env()
+static t_env	*basic_env(void)
 {
 	t_env	*env;
 
