@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/19 11:56:08 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/22 10:39:18 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static t_data	init_data(char **env, t_env *env_list, int size)
 
 	data.pipes = create_pipes(size);
 	data.env = env;
+	data.tmpfile = NULL;
 	data.env_list = env_list;
 	return (data);
 }

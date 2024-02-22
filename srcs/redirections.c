@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:46:49 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/02/21 18:06:32 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/22 10:28:01 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,24 +108,25 @@ char	**redirection(t_data *data)
 	int	i;
 	int	save_stdout;
 
+	i = 0;
 	if (check_redir_sign(data->cmd))
 		return (NULL);
-	i = 0;
-	// open_heredoc(data);
+	if (open_heredoc(data)) // TODO
+		return (NULL);
 	while (data->cmd[i])
 	{
-		if (!ft_strcmp(data->cmd[i], ">") && ft_strlen(data->cmd[i]) == 1)
+		if (is_redir_sign(data->cmd[i], ">", 1))
 			data->cmd = redirect_add(data->cmd[i + 1], data->cmd, i);
-		else if (!ft_strcmp(data->cmd[i], ">>")
-			&& ft_strlen(data->cmd[i]) == 2)
+		else if (is_redir_sign(data->cmd[i], ">>", 2))
 			data->cmd = redirect_append(data->cmd[i + 1], data->cmd, i);
-		else if (!ft_strcmp(data->cmd[i], "<")
-			&& ft_strlen(data->cmd[i]) == 1)
+		else if (is_redir_sign(data->cmd[i], ">>", 1))
 			data->cmd = redirect_input(data->cmd[i + 1], data->cmd, i);
+		else if (is_redir_sign(data->cmd[i], "<<", 2))
+			data->cmd = redirect_heredoc(data->cmd[i + 1], data->cmd, i); // TODO
 		else
 			i++;
 		if (!data->cmd)
-			return (NULL);	
+			return (NULL);
 		if (DEBUG)
 		{
 			save_stdout = dup(STDOUT_FILENO);
