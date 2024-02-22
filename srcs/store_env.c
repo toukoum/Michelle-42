@@ -6,30 +6,16 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 21:50:43 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/20 17:12:25 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/21 16:38:07 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// (address of '=') - (address of str beginning) = index of '='
 static char	*get_env_var_name(char *str)
 {
-	int		i;
-	char	*new_str;
-
-	i = 0;
-	while (str[i] && str[i] != '=')
-		i++;
-	new_str = ft_calloc(i + 1, sizeof(char));
-	if (!new_str)
-		return (NULL);
-	i = 0;
-	while (str[i] && str[i] != '=')
-	{
-		new_str[i] = str[i];
-		i++;
-	}
-	return (new_str);
+	return (ft_substr(str, 0, ft_strchr(str, '=') - str));
 }
 
 static char	*get_env_var_value(char *str)
@@ -70,6 +56,18 @@ t_env	*store_env(char **env)
 	return (env_list);
 }
 
+static char	*increment_shlvl(char *name, char *value)
+{
+	int	n;
+
+	if (ft_strcmp(name, "SHLVL"))
+		return (value);
+	n = ft_atoi(value) + 1;
+	free(value);
+	value = ft_itoa(n);
+	return (value);
+}
+
 t_env	*add_env_node(t_env *head, char *name, char *value)
 {
 	t_env	*new;
@@ -78,6 +76,9 @@ t_env	*add_env_node(t_env *head, char *name, char *value)
 	curr = head;
 	if (!name || !value)
 		return (free(name), free(value), free_env_list(head), NULL);
+	value = increment_shlvl(name, value);
+	if (!value)
+		return (free(name), free_env_list(head), NULL);
 	new = ft_calloc(1, sizeof(t_env));
 	if (!new)
 		return (free(name), free(value), free_env_list(head), NULL);
