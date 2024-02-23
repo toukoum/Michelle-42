@@ -6,23 +6,21 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:09:18 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/15 15:35:34 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:53:25 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <readline/history.h>
-#include <readline/readline.h>
 
-void	quit_shell(t_env *env)
+void	quit_shell(t_env *env, unsigned char exit_code)
 {
-	printf("exit\n");
 	free_env_list(env);
 	rl_clear_history();
-	exit(0);
+	static_cwd(FREE);
+	exit(exit_code);
 }
 
-static void	catch_sigint(int sig)
+void	catch_sigint(int sig)
 {
 	(void)sig;
 	printf("\n");
@@ -31,21 +29,39 @@ static void	catch_sigint(int sig)
 	rl_redisplay();
 }
 
-static void	handle_parse_res(int res, char *input, t_env *env)
+static void	handle_parse_res(int *res, char *input, t_env *env)
 {
-	if (res != EMPTY_INPUT)
-		add_history(input);
-	if (res == SYNTAX_ERROR)
+	add_history(input);
+	if (*res == SYNTAX_ERROR)
+	{
 		printf("syntax error\n");
+		*res = 1;
+	}
 	free(input);
-	if (res == EXIT)
-		quit_shell(env);
+	if (*res == EXIT)
+		quit_shell(env, 0);
+}
+
+static bool	is_empty(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ' && str[i] != '\t' && str[i] != '\n'
+			&& str[i] != '\v' && str[i] != '\f' && str[i] != '\r')
+			return (false);
+		i++;
+	}
+	free(str);
+	return (true);
 }
 
 void	input(t_env **env)
 {
-	char	*input;
-	int		res;
+	char			*input;
+	int				res;
 
 	signal(SIGINT, catch_sigint);
 	signal(SIGQUIT, SIG_IGN);
@@ -54,8 +70,10 @@ void	input(t_env **env)
 	{
 		input = readline("minishell> ");
 		if (!input)
-			quit_shell(*env);
-		res = parse_input(ft_strdup(input), env, res);
-		handle_parse_res(res, input, *env);
+			quit_shell(*env, 0);
+		if (is_empty(input))
+			continue ;
+		res = parse_input(ft_strdup(input), env, &res);
+		handle_parse_res(&res, input, *env);
 	}
 }

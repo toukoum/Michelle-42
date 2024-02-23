@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:16:20 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/15 14:03:21 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/21 11:10:41 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static char	*extract_var_name(char *input)
 	return (str);
 }
 
-static char	*replace_curr_name(char *input, t_env *env, int *i, int res)
+static char	*replace_curr_name(char *input, t_env *env, int *i,
+		unsigned char res)
 {
 	char	*name;
 	char	*value;
@@ -80,7 +81,7 @@ static int	is_var_name_start(char *input, int i, char *c)
 	return (0);
 }
 
-char	*replace_var_names(char *input, t_env *env, int res)
+char	*replace_var_names(char *input, t_env *env, unsigned char res)
 {
 	int		i;
 	char	c;

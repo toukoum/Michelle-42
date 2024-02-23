@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:58:33 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/15 16:11:38 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/21 17:20:53 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,22 @@ int	set_var(t_env **env, char *name, char *value)
 	return (0);
 }
 
-static bool	export_valid(char **cmd, t_env **env)
+static bool	export_valid(char *cmd, t_env **env)
 {
 	char	*name;
 	char	*value;
 
-	if (!ft_strchr(cmd[1], '='))
+	if (!ft_strchr(cmd, '='))
 		return (false);
-	name = ft_substr(cmd[1], 0, ft_strchr(cmd[1], '=') - cmd[1]);
+	if (cmd[0] == '=')
+		return (false);
+	name = ft_substr(cmd, 0, ft_strchr(cmd, '=') - cmd);
 	if (!name)
 		return (NULL);
 	if (!var_name_valid(name))
 		return (free(name), false);
-	value = ft_substr(cmd[1], ft_strchr(cmd[1], '=')
-			- cmd[1] + 1, ft_strlen(cmd[1]));
+	value = ft_substr(cmd, ft_strchr(cmd, '=')
+			- cmd + 1, ft_strlen(cmd));
 	if (!value)
 		return (free(name), false);
 	set_var(env, name, value);
@@ -71,7 +73,19 @@ static bool	export_valid(char **cmd, t_env **env)
 
 int	ft_export(char **cmd, t_env **env)
 {
-	if (!export_valid(cmd, env))
+	int	i;
+
+	if (!cmd[1])
 		return (1);
+	i = 1;
+	while (cmd[i])
+	{
+		if (!export_valid(cmd[i], env))
+		{
+			printf("export: `%s': not a valid identifier\n", cmd[1]);
+			return (1);
+		}
+		i++;
+	}
 	return (0);
 }

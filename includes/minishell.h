@@ -46,11 +46,20 @@ typedef struct s_data
 	int					i;
 }						t_data;
 
-enum					e_input_parse_ret
+// exit return value
+# define TOO_MANY_ARGS -4
+# define INVALID_ARG -3
+
+// parse_input return value
+# define EXIT -2
+# define SYNTAX_ERROR -1
+
+// get_cwd action parameter
+enum e_cwd_action
 {
-	SYNTAX_ERROR = -3,
-	EMPTY_INPUT = -2,
-	EXIT = -1,
+	NOTHING,
+	UPDATE,
+	FREE,
 };
 
 # define DEBUG 1

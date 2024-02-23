@@ -13,33 +13,6 @@
 #include "libft.h"
 #include "minishell.h"
 
-static bool	is_redirector(char c)
-{
-	return (c == '>' || c == '<');
-}
-
-static int	count_words(char *str)
-{
-	int		i;
-	int		words;
-	char	quote;
-
-	i = 0;
-	words = 0;
-	quote = 0;
-	while (str[i])
-	{
-		if (set_quote(str[i], &quote) == 0)
-			words++;
-		if (!quote && ((str[i] != ' ' && (i == 0 || str[i - 1] == ' '
-						|| is_redirector(str[i - 1]))) || (is_redirector(str[i])
-					&& !is_redirector(str[i - 1]))))
-			words++;
-		i++;
-	}
-	return (words);
-}
-
 static int	word_size(char *input, int i, char quote)
 {
 	int	size;
@@ -121,9 +94,8 @@ static char	**split_quote(char *str)
 	while (str[i])
 	{
 		set_quote(str[i], &quote);
-		if ((str[i] != ' ' && (i == 0 || str[i - 1] == ' '
-					|| is_redirector(str[i - 1]))) || (is_redirector(str[i])
-				&& !quote))
+		if ((str[i] != ' ' && (space_before(str, i)
+					|| is_redirector(str[i - 1]))) || (is_redirector(str[i])))
 		{
 			split[j++] = new_word(str, &i, &quote);
 			if (!split[j - 1])
