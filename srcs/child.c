@@ -85,6 +85,9 @@ int	run_command(t_data data)
 	path = find_path(data);
 	if (!path)
 	{
+		ft_putstr_fd("command not found: ", 2);
+		ft_putstr_fd(no_surr_quotes[0], 2);
+		ft_putstr_fd("\n", 2);
 		printf("command not found: %s\n", no_surr_quotes[0]);
 		free_split(no_surr_quotes);
 		return (127);
