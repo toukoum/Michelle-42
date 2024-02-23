@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/22 13:58:04 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/23 11:43:05 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,14 @@ static void	child_free(t_data data, t_env *env_list, char ***split)
 	static_cwd(FREE);
 }
 
-static t_data	init_data(char **env, t_env *env_list, int size)
+static t_data	init_data(char **env, t_env *env_list, int size, char ***split)
 {
 	t_data	data;
 
+	data.split = split;
 	data.pipes = create_pipes(size);
 	data.env = env;
+	data.tmpfile = NULL;
 	data.env_list = env_list;
 	data.i = 0;
 	return (data);
@@ -53,6 +55,8 @@ static int	create_childs(char ***split, char **env, t_env *env_list)
 		{
 			data.cmd = split[data.i];
 			data.i = run_command(data);
+      dup2(data.save_stdout, STDOUT_FILENO);
+			dup2(data.save_stdin, STDIN_FILENO);
 			child_free(data, env_list, split);
 			exit(data.i);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:50:34 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/20 18:29:07 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/23 11:48:16 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,12 @@ char	***split_split(char **pipe_split)
 		if (!split[i])
 			return (free_split_split(split), NULL);
 		i++;
+	}
+	if (DEBUG)
+	{
+		for (int i = 0; split[i]; i++)
+			for (int j = 0; split[i][j]; j++)
+				printf("split_split[%d][%d]: %s\n", i, j, split[i][j]);
 	}
 	return (split);
 }
