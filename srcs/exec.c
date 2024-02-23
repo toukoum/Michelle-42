@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/22 18:47:02 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/23 15:21:56 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,25 @@
 #include "minishell.h"
 #include <sys/wait.h>
 
-static void	child_free(t_data data, t_env *env_list, char ***split)
+static void	child_free(t_data data)
 {
 	clear_history();
 	free_pipes(data.pipes);
 	free_split(data.env);
-	free_env_list(env_list);
-	free_split_split(split);
+	free_env_list(data.env_list);
+	free_split_split(data.split);
 	static_cwd(FREE);
+	exit(data.i);
 }
 
-static t_data	init_data(char **env, t_env *env_list, int size)
+static t_data	init_data(char **env, t_env *env_list, int size, char ***split)
 {
 	t_data	data;
 
+	data.split = split;
 	data.pipes = create_pipes(size);
 	data.env = env;
+	data.tmpfile = NULL;
 	data.env_list = env_list;
 	data.i = 0;
 	return (data);
@@ -40,12 +43,14 @@ static int	create_childs(char ***split, char **env, t_env *env_list)
 	pid_t	pid;
 	t_data	data;
 
-	data.i = 0;
-	data = init_data(env, env_list, split_split_size(split) - 1);
+	data = init_data(env, env_list, split_split_size(split) - 1, split);
 	if (!data.pipes)
 		return (-1);
 	while (split[data.i])
 	{
+		data.cmd = split[data.i];
+		if (open_heredoc(&data))
+			return (-1);
 		pid = fork();
 		if (pid == -1)
 			return (-1);
@@ -53,8 +58,7 @@ static int	create_childs(char ***split, char **env, t_env *env_list)
 		{
 			data.cmd = split[data.i];
 			data.i = run_command(data);
-			child_free(data, env_list, split);
-			exit(data.i);
+			child_free(data);
 		}
 		data.i++;
 	}
