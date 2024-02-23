@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/23 11:43:05 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/23 12:28:32 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	create_childs(char ***split, char **env, t_env *env_list)
 	t_data	data;
 
 	data.i = 0;
-	data = init_data(env, env_list, split_split_size(split) - 1);
+	data = init_data(env, env_list, split_split_size(split) - 1, split);
 	if (!data.pipes)
 		return (-1);
 	while (split[data.i])
