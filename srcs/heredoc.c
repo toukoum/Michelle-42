@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:19:15 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/02/23 11:49:37 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/23 15:09:27 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	child_heredoc(t_data *data, char *delimiteur)
 			break ;
 		write(fd_tmp_file, buf, ft_strlen(buf));
 		write(fd_tmp_file, "\n", 1);
+		free(buf);
 		buf = readline(">>> ");
 	}
 	free(buf);

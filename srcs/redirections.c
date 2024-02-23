@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:46:49 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/02/23 11:47:40 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/23 14:56:11 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ char	**redirection(t_data *data)
 
 	i = 0;
 	if (check_redir_sign(data->cmd))
-		return (NULL);
-	if (open_heredoc(data))
 		return (NULL);
 	while (data->cmd[i])
 	{

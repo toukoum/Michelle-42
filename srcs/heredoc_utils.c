@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:02:48 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/02/23 12:31:00 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/23 15:26:24 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	child_heredoc_free(t_data *data)
 	free_env_list(data->env_list);
 	free_split_split(data->split);
 	free_tmpfile(data->tmpfile);
-	close(data->save_stdin);
-	close(data->save_stdout);
 	return ;
 }
 
@@ -51,6 +49,7 @@ char	*last_tmp_name(t_tmpfile *head)
 char	*get_tmp_name(void)
 {
 	char	*name;
+	char	*tmp;
 	int		fd;
 
 	name = malloc(10 * sizeof(char));
@@ -67,10 +66,11 @@ char	*get_tmp_name(void)
 	if (read(fd, name, 9) == -1)
 	{
 		perror("Failed to read from: /dev/urandom");
-		free(name);
-		close(fd);
-		return (NULL);
+		return (free(name), close(fd), NULL);
 	}
+	tmp = name;
+	name = ft_strjoin("/tmp/", name);
+	free(tmp);
 	close(fd);
 	return (name);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/23 12:35:36 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/23 13:40:41 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ enum					e_cwd_action
 	FREE,
 };
 
-# define DEBUG 1
+# define DEBUG 0
 
 t_env					*store_env(char **env);
 t_env					*add_env_node(t_env *head, char *name, char *value);
