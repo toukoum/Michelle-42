@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:46:49 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/02/22 10:28:01 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/23 11:47:40 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,60 +43,6 @@ char	**delete_open_file(char **cmd, int i)
 	return (new_cmd);
 }
 
-char	**redirect_add(char *to_open, char **cmd, int i)
-{
-	int	fd;
-
-	if (check_to_open(to_open))
-		return (NULL);
-	to_open = remove_quotes(to_open);
-	fd = open(to_open, O_CREAT | O_TRUNC | O_WRONLY, 0644);
-	if (fd == -1)
-		return (err_open_file(to_open));
-	if (dup2(fd, STDOUT_FILENO) == -1)
-	{
-		perror("Error with dup");
-		return (NULL);
-	}
-	close(fd);
-	return (delete_open_file(cmd, i));
-}
-char	**redirect_input(char *to_open, char **cmd, int i)
-{
-	int	fd;
-
-	if (check_to_open(to_open))
-		return (NULL);
-	fd = open(to_open, O_RDONLY);
-	if (fd == -1)
-		return (err_open_file(to_open));
-	if (dup2(fd, STDIN_FILENO) == -1)
-	{
-		perror("Error with dup");
-		return (NULL);
-	}
-	close(fd);
-	return (delete_open_file(cmd, i));
-}
-
-char	**redirect_append(char *to_open, char **cmd, int i)
-{
-	int	fd;
-
-	if (check_to_open(to_open))
-		return (NULL);
-	fd = open(to_open, O_CREAT | O_APPEND | O_WRONLY, 0644);
-	if (fd == -1)
-		return (err_open_file(to_open));
-	if (dup2(fd, STDOUT_FILENO) == -1)
-	{
-		perror("Error with dup");
-		return (NULL);
-	}
-	close(fd);
-	return (delete_open_file(cmd, i));
-}
-
 /**
  * cmd => {"echo", "bonjour", ">", "file", ">", "file2", ">"}
  * {"echo", "bonjour", ">", "file"}
@@ -105,28 +51,17 @@ char	**redirect_append(char *to_open, char **cmd, int i)
  */
 char	**redirection(t_data *data)
 {
-	int	i;
-	int	save_stdout;
+	int			i;
+	int			save_stdout;
+	t_tmpfile	*temp;
 
 	i = 0;
 	if (check_redir_sign(data->cmd))
 		return (NULL);
-	if (open_heredoc(data)) // TODO
+	if (open_heredoc(data))
 		return (NULL);
 	while (data->cmd[i])
 	{
-		if (is_redir_sign(data->cmd[i], ">", 1))
-			data->cmd = redirect_add(data->cmd[i + 1], data->cmd, i);
-		else if (is_redir_sign(data->cmd[i], ">>", 2))
-			data->cmd = redirect_append(data->cmd[i + 1], data->cmd, i);
-		else if (is_redir_sign(data->cmd[i], ">>", 1))
-			data->cmd = redirect_input(data->cmd[i + 1], data->cmd, i);
-		else if (is_redir_sign(data->cmd[i], "<<", 2))
-			data->cmd = redirect_heredoc(data->cmd[i + 1], data->cmd, i); // TODO
-		else
-			i++;
-		if (!data->cmd)
-			return (NULL);
 		if (DEBUG)
 		{
 			save_stdout = dup(STDOUT_FILENO);
@@ -136,21 +71,26 @@ char	**redirection(t_data *data)
 			{
 				printf("tour [%d]=> cmd[%d]: %s\n", i, j, data->cmd[j]);
 			}
+			temp = data->tmpfile;
+			while (temp)
+			{
+				printf("temp file %s \n", temp->name);
+				temp = temp->next;
+			}
 			dup2(save_stdout, STDOUT_FILENO);
 		}
+		if (is_redir_sign(data->cmd[i], ">", 1))
+			data->cmd = redirect_add(data->cmd[i + 1], data->cmd, i);
+		else if (is_redir_sign(data->cmd[i], ">>", 2))
+			data->cmd = redirect_append(data->cmd[i + 1], data->cmd, i);
+		else if (is_redir_sign(data->cmd[i], "<", 1))
+			data->cmd = redirect_input(data->cmd[i + 1], data->cmd, i);
+		else if (is_redir_sign(data->cmd[i], "<<", 2))
+			data->cmd = redirect_heredoc(data, i);
+		else
+			i++;
+		if (!data->cmd)
+			return (NULL);
 	}
 	return (data->cmd);
 }
-// make_redir(redir);
-// data->cmd = clear_cmd(data->cmd);
-
-// 		// // redirection >
-// 		// int fd = open(data.cmd[3], O_CREAT | O_TRUNC | O_WRONLY, 0644);
-
-// 		// // redirection >>
-// 		// int fd = open(data->cmd[3], O_CREAT | O_WRONLY | O_APPEND, 0644);
-
-// 		// redirection <
-// 		int fd = open(data.cmd[3], O_RDONLY);
-
-// 		//redirection <<

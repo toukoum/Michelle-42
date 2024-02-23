@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:50:34 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/21 10:55:53 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/23 11:48:16 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ static char	**split_quote(char *str)
 	{
 		set_quote(str[i], &quote);
 		if ((str[i] != ' ' && (i == 0 || str[i - 1] == ' '
-				|| is_redirector(str[i - 1]))) || (is_redirector(str[i])
+					|| is_redirector(str[i - 1]))) || (is_redirector(str[i])
 				&& !quote))
 		{
 			split[j++] = new_word(str, &i, &quote);

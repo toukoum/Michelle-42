@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:25:51 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/02/21 18:09:02 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/23 11:49:29 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ int	check_redir_sign(char **cmd)
 		redir_sign = cmd[i];
 		len = ft_strlen(redir_sign);
 		if ((redir_sign[0] == '>' || redir_sign[1] == '<') && (len > 2
-			|| !ft_strcmp(redir_sign, "<>") || !ft_strcmp(redir_sign, "><")))
+				|| !ft_strcmp(redir_sign, "<>") || !ft_strcmp(redir_sign,
+					"><")))
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token '",
 				STDERR_FILENO);

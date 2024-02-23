@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/22 11:25:16 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/23 09:54:52 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,19 @@ typedef struct s_env
 
 typedef struct s_tmpfile
 {
-	char				name[10];
-	int					fd;
+	char				*name;
 	struct s_tmpfile	*next;
 }						t_tmpfile;
 typedef struct s_data
 {
 	pid_t				save_stdout;
+	pid_t				save_stdin;
 	t_tmpfile			*tmpfile;
 	t_env				*env_list;
 	char				**cmd;
 	char				**env;
 	int					**pipes;
+	char				***split;
 	int					i;
 }						t_data;
 
@@ -52,7 +53,7 @@ enum					e_input_parse_ret
 	EXIT = -1,
 };
 
-# define DEBUG 0
+# define DEBUG 1
 
 t_env					*store_env(char **env);
 t_env					*add_env_node(t_env *head, char *name, char *value);
@@ -98,6 +99,15 @@ int						check_to_open(char *to_open);
 char					*remove_quotes(char *str);
 char					**err_open_file(char *to_open);
 int						check_redir_sign(char **cmd);
-int						is_redir_sign(char *s1, char *s2, int len);
+int						is_redir_sign(char *s1, char *s2, size_t len);
+int						open_heredoc(t_data *data);
+void					child_heredoc_free(t_data *data);
+char					*last_tmp_name(t_tmpfile *head);
+t_tmpfile				*add_tmpfile_node(t_tmpfile *head);
+char					**redirect_append(char *to_open, char **cmd, int i);
+char					**redirect_input(char *to_open, char **cmd, int i);
+char					**redirect_add(char *to_open, char **cmd, int i);
+char					**delete_open_file(char **cmd, int i);
+char					**redirect_heredoc(t_data *data, int i);
 
 #endif

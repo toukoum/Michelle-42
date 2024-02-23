@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/22 10:39:18 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/23 11:43:05 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ static void	child_free(t_data data, t_env *env_list, char ***split)
 	free_split_split(split);
 }
 
-static t_data	init_data(char **env, t_env *env_list, int size)
+static t_data	init_data(char **env, t_env *env_list, int size, char ***split)
 {
 	t_data	data;
 
+	data.split = split;
 	data.pipes = create_pipes(size);
 	data.env = env;
 	data.tmpfile = NULL;
@@ -41,7 +42,7 @@ static int	create_childs(char ***split, char **env, t_env *env_list)
 	int		i;
 
 	i = 0;
-	data = init_data(env, env_list, split_split_size(split) - 1);
+	data = init_data(env, env_list, split_split_size(split) - 1, split);
 	while (split[i])
 	{
 		pid = fork();
@@ -52,6 +53,8 @@ static int	create_childs(char ***split, char **env, t_env *env_list)
 			data.cmd = split[i];
 			data.i = i;
 			i = run_command(data);
+			dup2(data.save_stdout, STDOUT_FILENO);
+			dup2(data.save_stdin, STDIN_FILENO);
 			child_free(data, env_list, split);
 			exit(i);
 		}
