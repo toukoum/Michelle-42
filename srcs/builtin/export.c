@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:58:33 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/21 17:20:53 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/24 11:06:52 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,9 @@ int	ft_export(char **cmd, t_env **env)
 	{
 		if (!export_valid(cmd[i], env))
 		{
-			printf("export: `%s': not a valid identifier\n", cmd[1]);
+			ft_putstr_fd("export: `", 2);
+			ft_putstr_fd(cmd[1], 2);
+			ft_putstr_fd("': not a valid identifier\n'", 2);
 			return (1);
 		}
 		i++;

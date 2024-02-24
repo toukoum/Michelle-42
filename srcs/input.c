@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:09:18 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/21 14:53:25 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/24 12:38:29 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	handle_parse_res(int *res, char *input, t_env *env)
 		quit_shell(env, 0);
 }
 
-static bool	is_empty(char *str)
+bool	is_empty(char *str)
 {
 	int	i;
 
