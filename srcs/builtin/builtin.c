@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:29:22 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/23 14:26:52 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/24 12:37:45 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,6 @@ int	main_process_builtin(char **cmd, t_env **env)
 	int		status;
 
 	status = -1;
-	if (cmd[0] == NULL)
-	{
-		printf("syntax error near unexpected token '|'\n");
-		return (2);
-	}
 	no_surr_quotes = remove_surrounding_quotes(cmd);
 	if (!no_surr_quotes)
 		return (EXIT);

@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/23 15:29:57 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/24 13:21:10 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,15 @@ static void	setup_pipes(t_data data)
 	close_pipes(data);
 }
 
+static int	cmd_not_found(char **cmd)
+{
+	ft_putstr_fd("command not found: ", 2);
+	ft_putstr_fd(cmd[0], 2);
+	ft_putstr_fd("\n", 2);
+	free_split(cmd);
+	return (127);
+}
+
 int	run_command(t_data data)
 {
 	char	**no_surr_quotes;
@@ -77,21 +86,16 @@ int	run_command(t_data data)
 	int		err;
 
 	setup_pipes(data);
+	if (!data.cmd || !data.cmd[0])
+		return (141);
 	data.cmd = redirection(&data);
 	no_surr_quotes = remove_surrounding_quotes(data.cmd);
 	err = builtin(no_surr_quotes, data.env_list);
 	if (err != -1)
-		return (free_split(no_surr_quotes), err);
+		return (free_split(data.cmd), free_split(no_surr_quotes), err);
 	path = find_path(data);
 	if (!path)
-	{
-		ft_putstr_fd("command not found: ", 2);
-		ft_putstr_fd(no_surr_quotes[0], 2);
-		ft_putstr_fd("\n", 2);
-		printf("command not found: %s\n", no_surr_quotes[0]);
-		free_split(no_surr_quotes);
-		return (127);
-	}
+		return (cmd_not_found(no_surr_quotes));
 	if (execve(path, no_surr_quotes, data.env) == -1)
 		perror("");
 	if (ft_strcmp(path, data.cmd[0]))

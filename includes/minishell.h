@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/23 13:40:41 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/24 12:38:44 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int						count_words(char *str);
 
 bool					is_redirector(char c);
 bool					space_before(char *str, int i);
+bool					is_empty(char *str);
 
 // BUILTIN
 char					*static_cwd(int action);

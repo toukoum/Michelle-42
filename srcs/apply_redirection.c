@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:57:42 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/02/23 11:51:31 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/24 13:22:59 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@ char	**redirect_add(char *to_open, char **cmd, int i)
 	to_open = remove_quotes(to_open);
 	fd = open(to_open, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (fd == -1)
-		return (err_open_file(to_open));
+		return (free(to_open), err_open_file(to_open));
 	if (dup2(fd, STDOUT_FILENO) == -1)
 	{
+		free(to_open);
 		perror("Error with dup");
 		return (NULL);
 	}
 	close(fd);
+	free(to_open);
 	return (delete_open_file(cmd, i));
 }
 
