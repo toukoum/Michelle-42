@@ -6,10 +6,11 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/24 13:21:10 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:09:23 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 
 static char	**split_add_slashes(char *path)
@@ -39,7 +40,7 @@ static char	*find_path(t_data data)
 	char	**split;
 	int		i;
 
-	if ((!access(data.cmd[0], X_OK)))
+	if ((!access(data.cmd[0], F_OK)))
 		return (data.cmd[0]);
 	path = get_var_value(data.env_list, "PATH");
 	split = split_add_slashes(path);
@@ -79,6 +80,16 @@ static int	cmd_not_found(char **cmd)
 	return (127);
 }
 
+void	execve_error(char *name)
+{
+	struct stat	s_stat;
+	ft_putstr_fd(name, 2);
+	if (stat(name, &s_stat) == 0 && S_ISDIR(s_stat.st_mode))
+		ft_putstr_fd(": is a directory.\n", 2);
+	else
+		ft_putstr_fd(": permission denied\n", 2);
+}
+
 int	run_command(t_data data)
 {
 	char	**no_surr_quotes;
@@ -97,7 +108,7 @@ int	run_command(t_data data)
 	if (!path)
 		return (cmd_not_found(no_surr_quotes));
 	if (execve(path, no_surr_quotes, data.env) == -1)
-		perror("");
+		execve_error(no_surr_quotes[0]);
 	if (ft_strcmp(path, data.cmd[0]))
 		free(path);
 	free_split(no_surr_quotes);
