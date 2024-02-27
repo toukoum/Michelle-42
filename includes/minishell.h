@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/27 16:54:34 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/27 19:36:06 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
-# include <sys/wait.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 
 typedef struct s_env
 {
@@ -126,10 +126,14 @@ int						open_heredoc(t_data *data);
 void					child_heredoc_free(t_data *data);
 char					*last_tmp_name(t_tmpfile *head);
 t_tmpfile				*add_tmpfile_node(t_tmpfile *head);
-char					**redirect_append(char *to_open, char **cmd, int i, t_data *data);
-char					**redirect_input(char *to_open, char **cmd, int i, t_data *data);
-char					**redirect_add(char *to_open, char **cmd, int i, t_data *data);
+char					**redirect_append(char *to_open, char **cmd, int i,
+							t_data *data);
+char					**redirect_input(char *to_open, char **cmd, int i,
+							t_data *data);
+char					**redirect_add(char *to_open, char **cmd, int i,
+							t_data *data);
 char					**delete_open_file(char **cmd, int i, t_data *data);
 char					**redirect_heredoc(t_data *data, int i);
+void					free_tmpfile(t_tmpfile *tmpfile_list);
 
 #endif

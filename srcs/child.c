@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/27 17:35:25 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/27 19:39:07 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ int	run_command(t_data *data)
 	if (!data->cmd || !data->cmd[0])
 		return (141);
 	err = redirection(data);
+	if (!data->cmd || !data->cmd[0])
+		return (1);
 	if (err != 0)
 		return (err);
 	no_surr_quotes = remove_surrounding_quotes(data->cmd);
