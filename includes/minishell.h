@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/27 15:47:22 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/27 16:54:34 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_data
 	char				***split;
 	int					i;
 	int					exit_code;
+	int					*pids;
 }						t_data;
 
 // exit return value

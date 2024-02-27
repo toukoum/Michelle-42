@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 10:25:51 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/02/23 11:49:29 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/27 17:18:22 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,6 @@ char	**err_open_file(char *to_open)
 	ft_putstr_fd(to_open, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
 	perror("");
+	free(to_open);
 	return (NULL);
 }
