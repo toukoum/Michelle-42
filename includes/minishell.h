@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/24 12:38:44 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/27 15:40:27 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_data
 	int					**pipes;
 	char				***split;
 	int					i;
+	int					exit_code;
 }						t_data;
 
 // exit return value
@@ -85,7 +86,7 @@ char					**env_to_split(t_env *head);
 char					**remove_surrounding_quotes(char **split);
 char					***split_split(char **pipe_split);
 
-int						run_command(t_data data);
+int						run_command(t_data *data);
 int						exec(char ***split_split, t_env **env);
 int						set_quote(char c, char *quote);
 int						parse_input(char *input, t_env **env, int *res);
@@ -112,7 +113,7 @@ int						ft_exit(char **no_surr_quotes);
 int						handle_exit_code(int exit_code);
 bool					can_quit_shell(char **cmd, int *exit_code);
 
-char					**redirection(t_data *data);
+int						redirection(t_data *data);
 void					ft_free_cmd(char **cmd);
 int						check_to_open(char *to_open);
 char					*remove_quotes(char *str);
@@ -123,10 +124,10 @@ int						open_heredoc(t_data *data);
 void					child_heredoc_free(t_data *data);
 char					*last_tmp_name(t_tmpfile *head);
 t_tmpfile				*add_tmpfile_node(t_tmpfile *head);
-char					**redirect_append(char *to_open, char **cmd, int i);
-char					**redirect_input(char *to_open, char **cmd, int i);
-char					**redirect_add(char *to_open, char **cmd, int i);
-char					**delete_open_file(char **cmd, int i);
+char					**redirect_append(char *to_open, char **cmd, int i, t_data *data);
+char					**redirect_input(char *to_open, char **cmd, int i, t_data *data);
+char					**redirect_add(char *to_open, char **cmd, int i, t_data *data);
+char					**delete_open_file(char **cmd, int i, t_data *data);
 char					**redirect_heredoc(t_data *data, int i);
 
 #endif

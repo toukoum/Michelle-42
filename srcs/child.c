@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/24 13:21:10 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/27 15:40:53 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,26 +79,26 @@ static int	cmd_not_found(char **cmd)
 	return (127);
 }
 
-int	run_command(t_data data)
+int	run_command(t_data *data)
 {
 	char	**no_surr_quotes;
 	char	*path;
 	int		err;
 
-	setup_pipes(data);
-	if (!data.cmd || !data.cmd[0])
+	setup_pipes(*data);
+	if (!data->cmd || !data->cmd[0])
 		return (141);
-	data.cmd = redirection(&data);
-	no_surr_quotes = remove_surrounding_quotes(data.cmd);
-	err = builtin(no_surr_quotes, data.env_list);
+	err = redirection(data);
+	no_surr_quotes = remove_surrounding_quotes(data->cmd);
+	err = builtin(no_surr_quotes, data->env_list);
 	if (err != -1)
-		return (free_split(data.cmd), free_split(no_surr_quotes), err);
-	path = find_path(data);
+		return (free_split(no_surr_quotes), err);
+	path = find_path(*data);
 	if (!path)
 		return (cmd_not_found(no_surr_quotes));
-	if (execve(path, no_surr_quotes, data.env) == -1)
+	if (execve(path, no_surr_quotes, data->env) == -1)
 		perror("");
-	if (ft_strcmp(path, data.cmd[0]))
+	if (ft_strcmp(path, data->cmd[0]))
 		free(path);
 	free_split(no_surr_quotes);
 	return (127);
