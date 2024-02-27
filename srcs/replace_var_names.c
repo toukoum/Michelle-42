@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_var_names.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:16:20 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/21 11:10:41 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/27 15:49:08 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@ static char	*replace_curr_name(char *input, t_env *env, int *i,
 	char	*value;
 	char	*replaced;
 
-	if (input[*i] == '$' && input[*i + 1] == '?'
-		&& (input[*i + 2] == ' ' || !input[*i + 2]
-			|| input[*i + 2] == '"'))
+	if (input[*i] == '$' && input[*i + 1] == '?')
 	{
 		value = ft_itoa(res);
 		replaced = str_replace(input, "$?", value, *i);
@@ -72,8 +70,7 @@ static int	is_var_name_start(char *input, int i, char *c)
 		*c = 0;
 		return (1);
 	}
-	if (input[i] == '$' && input[i + 1] == '?'
-		&& (input[i + 2] == ' ' || !input[i + 2]))
+	if (input[i] == '$' && input[i + 1] == '?')
 	{
 		*c = 0;
 		return (1);
