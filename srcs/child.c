@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/27 19:39:07 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/27 20:31:04 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,21 @@ static int	cmd_not_found(char **cmd)
 	return (127);
 }
 
-void	execve_error(char *name)
+int	execve_error(char *name)
 {
 	struct stat	s_stat;
+	
 	ft_putstr_fd(name, 2);
 	if (stat(name, &s_stat) == 0 && S_ISDIR(s_stat.st_mode))
-		ft_putstr_fd(": is a directory.\n", 2);
+	{
+		ft_putstr_fd(": Is a directory\n", 2);
+		return (126);
+	}
 	else
+	{
 		ft_putstr_fd(": permission denied\n", 2);
+		return (126);
+	}
 }
 
 int	run_command(t_data *data)
@@ -112,9 +119,9 @@ int	run_command(t_data *data)
 	if (!path)
 		return (cmd_not_found(no_surr_quotes));
 	if (execve(path, no_surr_quotes, data->env) == -1)
-		execve_error(no_surr_quotes[0]);
+		err = execve_error(no_surr_quotes[0]);
 	if (ft_strcmp(path, data->cmd[0]))
 		free(path);
 	free_split(no_surr_quotes);
-	return (127);
+	return (err);
 }
