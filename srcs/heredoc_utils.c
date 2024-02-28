@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:02:48 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/02/27 18:11:56 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/28 12:12:47 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,15 @@ char	*get_tmp_name(void)
 		return (perror("Failed to read from: /dev/urandom"), free(name),
 			close(fd), NULL);
 	tmp = name;
-	name = ft_strjoin("/tmp/", name);
-	free(tmp);
-	tmp = name;
 	while (*tmp)
 	{
 		*tmp = (*tmp % 26) + 'a';
 		tmp++;
 	}
-	dprintf(2, "nom du fi a chier: %s\n", name);
+	tmp = name;
+	name = ft_strjoin("/tmp/", name);
+	free(tmp);
+	dprintf(2, "nom du fichier: %s\n", name);
 	return (close(fd), name);
 }
 
