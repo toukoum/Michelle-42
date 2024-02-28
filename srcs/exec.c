@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 13:20:35 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/28 14:14:43 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static int	create_childs(char ***split, char **env, t_env *env_list)
 	{
 		data.cmd = split[data.i];
 		if (open_heredoc(&data))
-			return (-1);
+			return (close_pipes(data), free_pipes(data.pipes), free(data.pids), 2);
 		data.pids[data.i] = fork();
 		if (data.pids[data.i] == -1)
 			return (free(data.pids), -1);

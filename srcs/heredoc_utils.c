@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:02:48 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/02/28 12:12:47 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/28 14:35:28 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	free_tmpfile(t_tmpfile *tmpfile_list)
 
 void	child_heredoc_free(t_data *data)
 {
-	// TODO
 	clear_history();
 	free_pipes(data->pipes);
 	free_split(data->env);
@@ -35,7 +34,6 @@ void	child_heredoc_free(t_data *data)
 	free_split_split(data->split);
 	free_tmpfile(data->tmpfile);
 	free(data->pids);
-	return ;
 }
 
 char	*last_tmp_name(t_tmpfile *head)
@@ -72,7 +70,6 @@ char	*get_tmp_name(void)
 	tmp = name;
 	name = ft_strjoin("/tmp/", name);
 	free(tmp);
-	dprintf(2, "nom du fichier: %s\n", name);
 	return (close(fd), name);
 }
 

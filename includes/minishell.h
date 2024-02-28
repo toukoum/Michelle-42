@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/27 19:36:06 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/28 14:34:09 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ enum					e_cwd_action
 	FREE,
 };
 
+extern int g_exit_code;
 # define DEBUG 0
 
 t_env					*store_env(char **env);
@@ -135,5 +136,6 @@ char					**redirect_add(char *to_open, char **cmd, int i,
 char					**delete_open_file(char **cmd, int i, t_data *data);
 char					**redirect_heredoc(t_data *data, int i);
 void					free_tmpfile(t_tmpfile *tmpfile_list);
+void					heredoc_sigint(int code);
 
 #endif

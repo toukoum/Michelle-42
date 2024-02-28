@@ -6,7 +6,7 @@ C_FILES =	main.c str_replace.c store_env.c env_list_utils.c input.c parse_input.
 			builtin/echo.c builtin/builtin.c builtin/export.c builtin/ft_pwd.c builtin/ft_cd.c builtin/ft_unset.c \
 			builtin/ft_exit.c \
 			redirections.c redirections_utils.c heredoc.c heredoc_utils.c \
-			apply_redirection.c
+			apply_redirection.c sig_heredoc.c
 
 SRCS = $(addprefix srcs/,$(C_FILES))
 OBJS = $(SRCS:.c=.o)
