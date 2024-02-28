@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 18:29:37 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:53:18 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ bool					space_before(char *str, int i);
 bool					is_empty(char *str);
 bool					is_whitespace(char c);
 bool					is_folder(char *name);
+bool					add_empty_node(t_env **env, char *name);
 
 // BUILTIN
 char					*static_cwd(int action);
