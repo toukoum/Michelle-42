@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:18:04 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/02/28 17:12:09 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:30:36 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,11 @@ void	heredoc_sigint(int code)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+}
+
+bool	is_folder(char *name)
+{
+	struct stat	s_stat;
+
+	return (stat(name, &s_stat) == 0 && S_ISDIR(s_stat.st_mode));
 }
