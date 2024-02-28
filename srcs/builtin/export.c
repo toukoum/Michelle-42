@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:58:33 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/27 20:19:04 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/28 18:06:54 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static bool	var_name_valid(char *name)
 	int	i;
 
 	i = 0;
+	if (ft_isdigit(name[0]))
+		return (false);
 	while (name[i])
 	{
 		if (!ft_isalnum(name[i]) && name[i] != '_')
@@ -49,13 +51,42 @@ int	set_var(t_env **env, char *name, char *value)
 	return (0);
 }
 
+bool	add_empty_node(t_env **env, char *name)
+{
+	t_env	*curr;
+	t_env	*new;
+
+	curr = *env;
+	while (curr->next)
+	{
+		if (!ft_strcmp(curr->name, name))
+			return (false);
+		curr = curr->next;
+	}
+	new = ft_calloc(1, sizeof(t_env));
+	new->name = ft_strdup(name);
+	if (!new)
+		return (false);
+	if (!*env)
+		*env = new;
+	else
+		curr->next = new;
+	return (true);
+}
+
 static bool	export_valid(char *cmd, t_env **env)
 {
 	char	*name;
 	char	*value;
+	char	*tmp;
 
 	if (!ft_strchr(cmd, '='))
-		return (false);
+	{
+		if (!var_name_valid(cmd))
+			return (false);
+		add_empty_node(env, cmd);
+		return (true);
+	}
 	if (cmd[0] == '=')
 		return (false);
 	name = ft_substr(cmd, 0, ft_strchr(cmd, '=') - cmd);
@@ -67,8 +98,26 @@ static bool	export_valid(char *cmd, t_env **env)
 			- cmd + 1, ft_strlen(cmd));
 	if (!value)
 		return (free(name), false);
+	tmp = value;
+	value = remove_quotes(value);
+	free(tmp);
+	if (!value)
+		return (free(name), false);
 	set_var(env, name, value);
 	return (true);
+}
+
+static int	no_arg_export(t_env *env)
+{
+	while (env)
+	{
+		printf("declare -x %s", env->name);
+		if (env->value)
+			printf("=\"%s\"", env->value);
+		printf("\n");
+		env = env->next;
+	}
+	return (0);
 }
 
 int	ft_export(char **cmd, t_env **env)
@@ -76,7 +125,7 @@ int	ft_export(char **cmd, t_env **env)
 	int	i;
 
 	if (!cmd[1])
-		return (1);
+		return (no_arg_export(*env));
 	i = 1;
 	while (cmd[i])
 	{
@@ -84,7 +133,7 @@ int	ft_export(char **cmd, t_env **env)
 		{
 			ft_putstr_fd("export: `", 2);
 			ft_putstr_fd(cmd[1], 2);
-			ft_putstr_fd("': not a valid identifier \n'", 2);
+			ft_putstr_fd("': not a valid identifier \n", 2);
 			return (1);
 		}
 		i++;

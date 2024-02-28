@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 18:30:31 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/28 18:41:13 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ static char	*find_path(t_data data)
 	char	**split;
 	int		i;
 
-	if ((!access(data.cmd[0], F_OK)))
-		return (data.cmd[0]);
 	path = get_var_value(data.env_list, "PATH");
 	split = split_add_slashes(path);
 	if (!split)
@@ -57,7 +55,10 @@ static char	*find_path(t_data data)
 		free(path);
 		i++;
 	}
-	return (free_split(split), NULL);
+	free_split(split);
+	if (!is_folder(data.cmd[0]) && !access(data.cmd[0], X_OK))
+		return (data.cmd[0]);
+	return (NULL);
 }
 
 static void	setup_pipes(t_data data)
@@ -73,28 +74,42 @@ static void	setup_pipes(t_data data)
 
 static int	cmd_not_found(char **cmd)
 {
-	ft_putstr_fd("command not found: ", 2);
-	ft_putstr_fd(cmd[0], 2);
-	ft_putstr_fd("\n", 2);
-	free_split(cmd);
-	return (127);
-}
+	int	err;
 
-int	execve_error(char *name)
-{
-	struct stat	s_stat;
-
-	ft_putstr_fd(name, 2);
-	if (stat(name, &s_stat) == 0 && S_ISDIR(s_stat.st_mode))
+	// existe
+	// dossier
+	// exec
+	if (access(cmd[0], F_OK))
+	{
+		ft_putstr_fd("no such file or directory: ", 2);
+		err = 127;
+	}
+	else if ((cmd[0][0] == '/' || cmd[0][0] == '.') && is_folder(cmd[0]))
 	{
 		ft_putstr_fd(": Is a directory\n", 2);
 		return (126);
 	}
+	else if ((cmd[0][0] == '/' || cmd[0][0] == '.') && access(cmd[0], X_OK))
+	{
+		ft_putstr_fd("permission denied: ", 2);
+		err = 126;
+	}
 	else
 	{
-		ft_putstr_fd(": permission denied\n", 2);
-		return (126);
+		ft_putstr_fd("command not found: ", 2);
+		err = 127;
 	}
+	ft_putstr_fd(cmd[0], 2);
+	ft_putstr_fd("\n", 2);
+	free_split(cmd);
+	return (err);
+}
+
+int	execve_error(char *name)
+{
+	ft_putstr_fd(name, 2);
+	ft_putstr_fd(": permission denied\n", 2);
+	return (126);
 }
 
 int	run_command(t_data *data)

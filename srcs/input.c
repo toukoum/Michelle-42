@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:09:18 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 16:08:55 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/28 18:41:52 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ bool	is_empty(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] != ' ' && str[i] != '\t' && str[i] != '\n'
-			&& str[i] != '\v' && str[i] != '\f' && str[i] != '\r')
+		if (!is_whitespace(str[i]))
 			return (false);
 		i++;
 	}
