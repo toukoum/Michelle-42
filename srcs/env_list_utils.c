@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:07:31 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/22 18:46:24 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:58:01 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	display_env(t_env *env)
 {
 	while (env)
 	{
-		printf("%s=%s\n", env->name, env->value);
+		if (env->value)
+			printf("%s=%s\n", env->name, env->value);
 		env = env->next;
 	}
 	return (0);
@@ -73,15 +74,18 @@ char	**env_to_split(t_env *head)
 	i = 0;
 	while (head)
 	{
-		tmp = ft_strjoin(head->name, "=");
-		if (!tmp)
-			return (free_split(split), NULL);
-		split[i] = ft_strjoin(tmp, head->value);
-		free(tmp);
-		if (!split[i])
-			return (free_split(split), NULL);
+		if (head->value)
+		{
+			tmp = ft_strjoin(head->name, "=");
+			if (!tmp)
+				return (free_split(split), NULL);
+			split[i] = ft_strjoin(tmp, head->value);
+			free(tmp);
+			if (!split[i])
+				return (free_split(split), NULL);
+			i++;
+		}
 		head = head->next;
-		i++;
 	}
 	return (split);
 }
