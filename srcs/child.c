@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 13:17:28 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/28 18:30:31 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static int	cmd_not_found(char **cmd)
 int	execve_error(char *name)
 {
 	struct stat	s_stat;
-	
+
 	ft_putstr_fd(name, 2);
 	if (stat(name, &s_stat) == 0 && S_ISDIR(s_stat.st_mode))
 	{

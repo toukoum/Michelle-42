@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:09:18 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 15:36:49 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/28 16:08:55 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	quit_shell(t_env *env, unsigned char exit_code)
 void	catch_sigint(int sig)
 {
 	(void)sig;
+	g_exit_code = 130;
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -73,7 +74,7 @@ void	input(t_env **env)
 	res = 0;
 	while (1)
 	{
-		input = readline(BMAG"🧓 Michelle"COLOR_RESET BHYEL"->"COLOR_RESET" ");
+		input = readline(BMAG"🧓 Michelle" COLOR_RESET BHYEL"->"COLOR_RESET" ");
 		if (!input)
 			quit_shell(*env, 0);
 		if (is_empty(input))

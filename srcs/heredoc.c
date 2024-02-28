@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:19:15 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/02/28 15:08:50 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/28 18:33:06 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@ int	is_redir_sign(char *s1, char *s2, size_t len)
 	return (!ft_strcmp(s1, s2) && (ft_strlen(s1) == len));
 }
 
-void print_eof_heredoc(char *delimiteur)
+void	print_eof_heredoc(char *delimiteur)
 {
-	ft_putstr_fd("bash: warning: here-document at line 1 delimited by end-of-file (wanted `", 2);
+	ft_putstr_fd("bash: warning: here-document at line 1\
+		delimited by end-of-file (wanted `",
+		2);
 	ft_putstr_fd(delimiteur, 2);
 	ft_putstr_fd("')\n", 2);
 }
+
 int	child_heredoc(t_data *data, char *delimiteur)
 {
 	char	*buf;
@@ -56,7 +59,6 @@ int	handle_heredoc(t_data *data, int i)
 
 	if (check_to_open(data->cmd[i + 1]))
 		return (1);
-
 	signal(SIGINT, SIG_IGN);
 	pid_fork = fork();
 	if (pid_fork == -1)
@@ -65,7 +67,7 @@ int	handle_heredoc(t_data *data, int i)
 	{
 		signal(SIGINT, heredoc_sigint);
 		signal(SIGQUIT, SIG_IGN);
-		close_pipes(*data);	
+		close_pipes(*data);
 		child_heredoc(data, data->cmd[i + 1]);
 		child_heredoc_free(data);
 		signal(SIGINT, SIG_DFL);
@@ -83,7 +85,7 @@ int	handle_heredoc(t_data *data, int i)
  */
 int	open_heredoc(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (data->cmd[i])

@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/16 17:46:49 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/02/27 17:09:33 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/28 18:36:06 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ char	**delete_open_file(char **cmd, int i, t_data *data)
 
 	original_index = 0;
 	new_index = 0;
-	size_cmd = 0;
-	while (cmd[size_cmd])
-		size_cmd++;
+	size_cmd = split_size(cmd);
 	new_cmd = ft_calloc(size_cmd - 1, sizeof(char *));
 	if (!new_cmd)
 		return (NULL);
@@ -34,11 +32,9 @@ char	**delete_open_file(char **cmd, int i, t_data *data)
 			original_index++;
 			continue ;
 		}
-		new_cmd[new_index] = ft_strdup(cmd[original_index]);
-		if (!new_cmd[new_index])
+		new_cmd[new_index] = ft_strdup(cmd[original_index++]);
+		if (!new_cmd[new_index++])
 			return (NULL);
-		original_index++;
-		new_index++;
 	}
 	free_split(data->split[data->i]);
 	data->split[data->i] = new_cmd;
@@ -53,7 +49,7 @@ char	**delete_open_file(char **cmd, int i, t_data *data)
  */
 int	redirection(t_data *data)
 {
-	int			i;
+	int	i;
 
 	i = 0;
 	if (check_redir_sign(data->cmd))
