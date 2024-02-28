@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:19:15 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/02/28 15:08:50 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/28 16:52:50 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ int	is_redir_sign(char *s1, char *s2, size_t len)
 
 void print_eof_heredoc(char *delimiteur)
 {
-	ft_putstr_fd("bash: warning: here-document at line 1 delimited by end-of-file (wanted `", 2);
+	ft_putstr_fd("bash: warning: here-document delimited by end-of-file (wanted `", 2);
 	ft_putstr_fd(delimiteur, 2);
 	ft_putstr_fd("')\n", 2);
 }
+
 int	child_heredoc(t_data *data, char *delimiteur)
 {
 	char	*buf;

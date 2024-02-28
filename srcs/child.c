@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 13:17:28 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/28 16:46:38 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ static char	*find_path(t_data data)
 	char	**split;
 	int		i;
 
-	if ((!access(data.cmd[0], F_OK)))
-		return (data.cmd[0]);
 	path = get_var_value(data.env_list, "PATH");
 	split = split_add_slashes(path);
 	if (!split)
@@ -57,7 +55,10 @@ static char	*find_path(t_data data)
 		free(path);
 		i++;
 	}
-	return (free_split(split), NULL);
+	free_split(split);
+	if ((!access(data.cmd[0], F_OK)))
+		return (data.cmd[0]);
+	return (NULL);
 }
 
 static void	setup_pipes(t_data data)
