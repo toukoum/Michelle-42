@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:19:15 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/02/23 15:09:27 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/28 13:22:16 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	handle_heredoc(t_data *data, int i)
 		return (1);
 	else if (pid_fork == 0)
 	{
+		close_pipes(*data);
 		child_heredoc(data, data->cmd[i + 1]);
 		child_heredoc_free(data);
 		exit(0);

@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/27 19:36:19 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/28 13:20:35 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ static int	create_childs(char ***split, char **env, t_env *env_list)
 			child_free(data);
 		}
 		free_tmpfile(data.tmpfile);
+		data.tmpfile = NULL;
 		data.i++;
 	}
 	return (wait_childs(data));
