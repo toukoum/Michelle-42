@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:09:18 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 17:41:38 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:02:03 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ bool	is_empty(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (is_whitespace(str[i]))
+		if (!is_whitespace(str[i]))
 			return (false);
 		i++;
 	}
