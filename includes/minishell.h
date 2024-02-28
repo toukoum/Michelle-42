@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 15:35:25 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/28 17:41:28 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int						count_words(char *str);
 bool					is_redirector(char c);
 bool					space_before(char *str, int i);
 bool					is_empty(char *str);
+bool					is_whitespace(char c);
 
 // BUILTIN
 char					*static_cwd(int action);

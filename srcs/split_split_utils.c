@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 16:41:28 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/20 18:26:08 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:25:43 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	split_split_size(char ***split)
 	int	i;
 
 	i = 0;
-	while (split[i])
+	while (split[i] && split[i][0])
 		i++;
 	return (i);
 }

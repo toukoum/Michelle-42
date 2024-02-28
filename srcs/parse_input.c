@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:09:43 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/27 16:31:54 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/28 17:46:47 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,56 @@ static bool	quote_closed(char *input)
 	return (s_count % 2 == 0 && d_count % 2 == 0);
 }
 
+bool	is_whitespace(char c)
+{
+	return (c != ' ' && c != '\t' && c != '\n'
+			&& c != '\v' && c != '\f' && c != '\r');
+}
+
+static bool	is_valid_command(char *str, int *i, char *quote)
+{
+	(*i)++;
+	while (str[*i])
+	{
+		set_quote(str[*i], quote);
+		if (!is_whitespace(str[*i]))
+			return (true);
+		if (str[*i] == '|' && !*quote)
+			return (false);
+		(*i)++;
+	}
+	return (false);
+}
+
+bool	pipe_valid(char *str)
+{
+	int		i;
+	char	quote;
+
+	i = 0;
+	quote = 0;
+	while (str[i])
+	{
+		set_quote(str[i], &quote);
+		if (str[i] == '|' && !quote)
+			if (!is_valid_command(str, &i, &quote))
+			{
+				ft_putstr_fd("syntax error\n", 2);
+				return (false);
+			}
+		i++;
+	}
+	return (true);
+}
+
 int	parse_input(char *input, t_env **env, int *res)
 {
 	int		status;
 	char	**split;
 	char	***split_arr;
 
+	if (!pipe_valid(input))
+		return (1);
 	if (!quote_closed(input))
 		return (free(input), SYNTAX_ERROR);
 	input = replace_var_names(input, *env, *res);
@@ -46,11 +90,11 @@ int	parse_input(char *input, t_env **env, int *res)
 	if (!input)
 		return (EXIT);
 	split = pipe_split(input);
-	free(input);
 	if (!split)
 		return (EXIT);
 	split_arr = split_split(split);
 	free_split(split);
+	free(input);
 	status = exec(split_arr, env);
 	if (status == EXIT)
 		return (EXIT);
