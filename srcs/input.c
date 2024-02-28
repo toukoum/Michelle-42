@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:09:18 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/27 16:37:50 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/28 15:36:49 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,11 @@ bool	is_empty(char *str)
 	return (true);
 }
 
+/**
+ * @brief handle the input of user
+ * 
+ * @param env environement variable
+ */
 void	input(t_env **env)
 {
 	char			*input;
@@ -68,7 +73,7 @@ void	input(t_env **env)
 	res = 0;
 	while (1)
 	{
-		input = readline("minishell> ");
+		input = readline(BMAG"🧓 Michelle"COLOR_RESET BHYEL"->"COLOR_RESET" ");
 		if (!input)
 			quit_shell(*env, 0);
 		if (is_empty(input))

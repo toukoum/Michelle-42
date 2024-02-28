@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 14:34:09 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/28 15:35:25 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,11 @@ enum					e_cwd_action
 
 extern int g_exit_code;
 # define DEBUG 0
+#define BHYEL "\e[1;93m"
+#define MAGB "\e[45m"
+#define BMAG "\e[1;35m"
+#define GRN "\e[0;32m"
+#define COLOR_RESET "\e[0m"
 
 t_env					*store_env(char **env);
 t_env					*add_env_node(t_env *head, char *name, char *value);
