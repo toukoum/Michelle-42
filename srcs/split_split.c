@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:50:34 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/23 11:48:16 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/28 18:46:58 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ static char	**split_quote(char *str)
 	while (str[i])
 	{
 		set_quote(str[i], &quote);
-		if ((str[i] != ' ' && (space_before(str, i)
-					|| is_redirector(str[i - 1]))) || (is_redirector(str[i])))
+		if ((str[i] != ' ' && (space_before(str, i) || is_redirector(str[i
+							- 1]))) || (is_redirector(str[i])))
 		{
 			split[j++] = new_word(str, &i, &quote);
 			if (!split[j - 1])
@@ -122,12 +122,6 @@ char	***split_split(char **pipe_split)
 		if (!split[i])
 			return (free_split_split(split), NULL);
 		i++;
-	}
-	if (DEBUG)
-	{
-		for (int i = 0; split[i]; i++)
-			for (int j = 0; split[i][j]; j++)
-				printf("split_split[%d][%d]: %s\n", i, j, split[i][j]);
 	}
 	return (split);
 }

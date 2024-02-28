@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:58:33 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 18:06:54 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:42:53 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,7 @@ static bool	export_valid(char *cmd, t_env **env)
 		return (NULL);
 	if (!var_name_valid(name))
 		return (free(name), false);
-	value = ft_substr(cmd, ft_strchr(cmd, '=')
-			- cmd + 1, ft_strlen(cmd));
+	value = ft_substr(cmd, ft_strchr(cmd, '=') - cmd + 1, ft_strlen(cmd));
 	if (!value)
 		return (free(name), false);
 	tmp = value;

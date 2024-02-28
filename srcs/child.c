@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 18:41:13 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/28 18:53:25 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,24 +61,10 @@ static char	*find_path(t_data data)
 	return (NULL);
 }
 
-static void	setup_pipes(t_data data)
-{
-	if (data.pipes[0] == NULL)
-		return ;
-	if (data.pipes[data.i] != NULL)
-		dup2(data.pipes[data.i][1], 1);
-	if (data.i != 0)
-		dup2(data.pipes[data.i - 1][0], 0);
-	close_pipes(data);
-}
-
 static int	cmd_not_found(char **cmd)
 {
 	int	err;
 
-	// existe
-	// dossier
-	// exec
 	if (access(cmd[0], F_OK))
 	{
 		ft_putstr_fd("no such file or directory: ", 2);
@@ -101,8 +87,7 @@ static int	cmd_not_found(char **cmd)
 	}
 	ft_putstr_fd(cmd[0], 2);
 	ft_putstr_fd("\n", 2);
-	free_split(cmd);
-	return (err);
+	return (free_split(cmd), err);
 }
 
 int	execve_error(char *name)

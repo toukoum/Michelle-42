@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:09:43 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 18:02:16 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:45:09 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ static bool	quote_closed(char *input)
 
 bool	is_whitespace(char c)
 {
-	return (c == ' ' || c == '\t' || c == '\n'
-			|| c == '\v' || c == '\f' || c == '\r');
+	return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
+		|| c == '\r');
 }
 
 static bool	is_valid_command(char *str, int *i, char *quote)
@@ -66,11 +66,13 @@ bool	pipe_valid(char *str)
 	{
 		set_quote(str[i], &quote);
 		if (str[i] == '|' && !quote)
+		{
 			if (!is_valid_command(str, &i, &quote))
 			{
 				ft_putstr_fd("syntax error\n", 2);
 				return (false);
 			}
+		}
 		i++;
 	}
 	return (true);

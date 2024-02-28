@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 18:29:37 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:53:48 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ enum					e_cwd_action
 	FREE,
 };
 
-extern int g_exit_code;
+extern int				g_exit_code;
 # define DEBUG 0
-#define BHYEL "\e[1;93m"
-#define MAGB "\e[45m"
-#define BMAG "\e[1;35m"
-#define GRN "\e[0;32m"
-#define COLOR_RESET "\e[0m"
+# define BHYEL "\e[1;93m"
+# define MAGB "\e[45m"
+# define BMAG "\e[1;35m"
+# define GRN "\e[0;32m"
+# define COLOR_RESET "\e[0m"
 
 t_env					*store_env(char **env);
 t_env					*add_env_node(t_env *head, char *name, char *value);
@@ -144,5 +144,6 @@ char					**delete_open_file(char **cmd, int i, t_data *data);
 char					**redirect_heredoc(t_data *data, int i);
 void					free_tmpfile(t_tmpfile *tmpfile_list);
 void					heredoc_sigint(int code);
+void					setup_pipes(t_data data);
 
 #endif
