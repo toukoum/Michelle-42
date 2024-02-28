@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/26 12:05:20 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/28 15:35:25 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
-# include <sys/wait.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 
 typedef struct s_env
 {
@@ -45,6 +45,8 @@ typedef struct s_data
 	int					**pipes;
 	char				***split;
 	int					i;
+	int					exit_code;
+	int					*pids;
 }						t_data;
 
 // exit return value
@@ -63,7 +65,13 @@ enum					e_cwd_action
 	FREE,
 };
 
+extern int g_exit_code;
 # define DEBUG 0
+#define BHYEL "\e[1;93m"
+#define MAGB "\e[45m"
+#define BMAG "\e[1;35m"
+#define GRN "\e[0;32m"
+#define COLOR_RESET "\e[0m"
 
 t_env					*store_env(char **env);
 t_env					*add_env_node(t_env *head, char *name, char *value);
@@ -86,7 +94,7 @@ char					**env_to_split(t_env *head);
 char					**remove_surrounding_quotes(char **split);
 char					***split_split(char **pipe_split);
 
-int						run_command(t_data data);
+int						run_command(t_data *data);
 int						exec(char ***split_split, t_env **env);
 int						set_quote(char c, char *quote);
 int						parse_input(char *input, t_env **env, int *res);
@@ -113,7 +121,7 @@ int						ft_exit(char **no_surr_quotes);
 int						handle_exit_code(int exit_code);
 bool					can_quit_shell(char **cmd, int *exit_code);
 
-char					**redirection(t_data *data);
+int						redirection(t_data *data);
 void					ft_free_cmd(char **cmd);
 int						check_to_open(char *to_open);
 char					*remove_quotes(char *str);
@@ -124,10 +132,15 @@ int						open_heredoc(t_data *data);
 void					child_heredoc_free(t_data *data);
 char					*last_tmp_name(t_tmpfile *head);
 t_tmpfile				*add_tmpfile_node(t_tmpfile *head);
-char					**redirect_append(char *to_open, char **cmd, int i);
-char					**redirect_input(char *to_open, char **cmd, int i);
-char					**redirect_add(char *to_open, char **cmd, int i);
-char					**delete_open_file(char **cmd, int i);
+char					**redirect_append(char *to_open, char **cmd, int i,
+							t_data *data);
+char					**redirect_input(char *to_open, char **cmd, int i,
+							t_data *data);
+char					**redirect_add(char *to_open, char **cmd, int i,
+							t_data *data);
+char					**delete_open_file(char **cmd, int i, t_data *data);
 char					**redirect_heredoc(t_data *data, int i);
+void					free_tmpfile(t_tmpfile *tmpfile_list);
+void					heredoc_sigint(int code);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:02:48 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/02/23 15:26:24 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:35:28 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,13 @@ void	free_tmpfile(t_tmpfile *tmpfile_list)
 
 void	child_heredoc_free(t_data *data)
 {
-	// TODO
 	clear_history();
 	free_pipes(data->pipes);
 	free_split(data->env);
 	free_env_list(data->env_list);
 	free_split_split(data->split);
 	free_tmpfile(data->tmpfile);
-	return ;
+	free(data->pids);
 }
 
 char	*last_tmp_name(t_tmpfile *head)
@@ -53,26 +52,25 @@ char	*get_tmp_name(void)
 	int		fd;
 
 	name = malloc(10 * sizeof(char));
-	name[9] = '\0';
 	if (!name)
 		return (NULL);
+	name[9] = '\0';
 	fd = open("/dev/urandom", O_RDONLY);
 	if (fd == -1)
-	{
-		perror("Failed to open /dev/urandom");
-		free(name);
-		return (NULL);
-	}
+		return (perror("Failed to open /dev/urandom"), free(name), NULL);
 	if (read(fd, name, 9) == -1)
+		return (perror("Failed to read from: /dev/urandom"), free(name),
+			close(fd), NULL);
+	tmp = name;
+	while (*tmp)
 	{
-		perror("Failed to read from: /dev/urandom");
-		return (free(name), close(fd), NULL);
+		*tmp = (*tmp % 26) + 'a';
+		tmp++;
 	}
 	tmp = name;
 	name = ft_strjoin("/tmp/", name);
 	free(tmp);
-	close(fd);
-	return (name);
+	return (close(fd), name);
 }
 
 t_tmpfile	*add_tmpfile_node(t_tmpfile *head)
@@ -85,6 +83,11 @@ t_tmpfile	*add_tmpfile_node(t_tmpfile *head)
 	if (!new)
 		return (NULL);
 	new->name = get_tmp_name();
+	while (!access(new->name, F_OK))
+	{
+		free(new->name);
+		new->name = get_tmp_name();
+	}
 	if (!new->name)
 		return (NULL);
 	if (!head)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:58:33 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/24 11:06:52 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/27 20:19:04 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	ft_export(char **cmd, t_env **env)
 		{
 			ft_putstr_fd("export: `", 2);
 			ft_putstr_fd(cmd[1], 2);
-			ft_putstr_fd("': not a valid identifier\n'", 2);
+			ft_putstr_fd("': not a valid identifier \n'", 2);
 			return (1);
 		}
 		i++;

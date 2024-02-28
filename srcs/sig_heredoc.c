@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sig_heredoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/01 21:50:45 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 14:34:37 by rgiraud          ###   ########.fr       */
+/*   Created: 2024/02/28 14:18:04 by rgiraud           #+#    #+#             */
+/*   Updated: 2024/02/28 14:56:03 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char **av, char **env)
-{
-	t_env	*env_list;
+int g_exit_code;
 
-	(void)ac;
-	(void)av;
-	g_exit_code = 0;
-	env_list = NULL;
-	env_list = store_env(env);
-	if (!env_list)
-		return (0);
-	input(&env_list);
-	free_env_list(env_list);
-	return (0);
+void	heredoc_sigint(int code)
+{
+	(void)code;
+	g_exit_code = 13;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
+

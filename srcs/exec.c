@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/24 12:37:40 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:14:43 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	child_free(t_data data)
 	free_env_list(data.env_list);
 	free_split_split(data.split);
 	static_cwd(FREE);
+	free(data.pids);
 	exit(data.i);
 }
 
@@ -35,50 +36,26 @@ static t_data	init_data(char **env, t_env *env_list, int size, char ***split)
 	data.tmpfile = NULL;
 	data.env_list = env_list;
 	data.i = 0;
+	data.exit_code = 0;
+	data.pids = malloc(split_split_size(split) * sizeof(pid_t));
 	return (data);
 }
 
-static int	create_childs(char ***split, char **env, t_env *env_list)
-{
-	pid_t	pid;
-	t_data	data;
-
-	data = init_data(env, env_list, split_split_size(split) - 1, split);
-	if (!data.pipes)
-		return (-1);
-	while (split[data.i])
-	{
-		data.cmd = split[data.i];
-		if (open_heredoc(&data))
-			return (-1);
-		pid = fork();
-		if (pid == -1)
-			return (-1);
-		if (pid == 0)
-		{
-			data.cmd = split[data.i];
-			data.i = run_command(data);
-			child_free(data);
-		}
-		data.i++;
-	}
-	close_pipes(data);
-	free_pipes(data.pipes);
-	return (1);
-}
-
-static int	wait_childs(char ***split)
+static int	wait_childs(t_data data)
 {
 	int	i;
 	int	status;
 
+	close_pipes(data);
+	free_pipes(data.pipes);
 	i = 0;
 	signal(SIGINT, SIG_IGN);
-	while (split[i])
+	while (data.split[i])
 	{
-		waitpid(-1, &status, 0);
+		waitpid(data.pids[i], &status, 0);
 		i++;
 	}
+	free(data.pids);
 	signal(SIGINT, catch_sigint);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
@@ -91,6 +68,34 @@ static int	wait_childs(char ***split)
 		return (status);
 	}
 	return (0);
+}
+
+static int	create_childs(char ***split, char **env, t_env *env_list)
+{
+	t_data	data;
+
+	data = init_data(env, env_list, split_split_size(split) - 1, split);
+	if (!data.pipes || !data.pids)
+		return (free(data.pids), -1);
+	while (split[data.i])
+	{
+		data.cmd = split[data.i];
+		if (open_heredoc(&data))
+			return (close_pipes(data), free_pipes(data.pipes), free(data.pids), 2);
+		data.pids[data.i] = fork();
+		if (data.pids[data.i] == -1)
+			return (free(data.pids), -1);
+		if (data.pids[data.i] == 0)
+		{
+			data.cmd = split[data.i];
+			data.i = run_command(&data);
+			child_free(data);
+		}
+		free_tmpfile(data.tmpfile);
+		data.tmpfile = NULL;
+		data.i++;
+	}
+	return (wait_childs(data));
 }
 
 int	exec(char ***split, t_env **env_list)
@@ -109,9 +114,9 @@ int	exec(char ***split, t_env **env_list)
 			return (free_split_split(split), status);
 	}
 	env = env_to_split(*env_list);
-	if (create_childs(split, env, *env_list) == -1)
+	status = create_childs(split, env, *env_list);
+	if (status == -1)
 		return (free_split(env), free_split_split(split), EXIT);
-	status = wait_childs(split);
 	free_split(env);
 	free_split_split(split);
 	return (status);

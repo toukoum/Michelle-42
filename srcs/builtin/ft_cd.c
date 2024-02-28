@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:11:45 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/19 12:25:23 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:48:05 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	update_env(t_env **env, char *old_pwd)
 		return (free(old_pwd), 1);
 	if (set_var(env, ft_strdup("OLDPWD"), old_pwd))
 		return (1);
-	if (set_var(env, ft_strdup("PWD"), getcwd(NULL, 0)))
+	if (set_var(env, getcwd(NULL, 0), ft_strdup("PWD")))
 		return (1);
 	return (0);
 }
@@ -42,6 +42,8 @@ int	ft_cd(char **cmd, t_env **env)
 	char	*old_pwd;
 	int		res;
 
+	if (split_size(cmd) > 2)
+		return (ft_putstr_fd("cd: too many arguments\n", 2), 1);
 	old_pwd = getcwd(NULL, 0);
 	if (!old_pwd)
 		return (1);
