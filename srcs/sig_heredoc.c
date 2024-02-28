@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig_heredoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:18:04 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/02/28 14:56:03 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/28 18:30:36 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,3 +24,9 @@ void	heredoc_sigint(int code)
 	rl_redisplay();
 }
 
+bool	is_folder(char *name)
+{
+	struct stat	s_stat;
+
+	return (stat(name, &s_stat) == 0 && S_ISDIR(s_stat.st_mode));
+}
