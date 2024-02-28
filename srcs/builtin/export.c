@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 18:58:33 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 17:04:53 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:06:54 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static bool	var_name_valid(char *name)
 	int	i;
 
 	i = 0;
+	if (ft_isdigit(name[0]))
+		return (false);
 	while (name[i])
 	{
 		if (!ft_isalnum(name[i]) && name[i] != '_')
@@ -80,6 +82,8 @@ static bool	export_valid(char *cmd, t_env **env)
 
 	if (!ft_strchr(cmd, '='))
 	{
+		if (!var_name_valid(cmd))
+			return (false);
 		add_empty_node(env, cmd);
 		return (true);
 	}
@@ -129,7 +133,7 @@ int	ft_export(char **cmd, t_env **env)
 		{
 			ft_putstr_fd("export: `", 2);
 			ft_putstr_fd(cmd[1], 2);
-			ft_putstr_fd("': not a valid identifier \n'", 2);
+			ft_putstr_fd("': not a valid identifier \n", 2);
 			return (1);
 		}
 		i++;
