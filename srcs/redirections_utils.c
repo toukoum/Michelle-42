@@ -56,7 +56,9 @@ int	check_to_open(char *to_open)
 	{
 		ft_putstr_fd("bash: syntax error near unexpected token '",
 			STDERR_FILENO);
-		ft_putstr_fd(to_open, STDERR_FILENO);
+		ft_putchar_fd(to_open[0], STDERR_FILENO);
+		if (to_open[1])
+			ft_putchar_fd(to_open[1], STDERR_FILENO);
 		ft_putstr_fd("'\n", STDERR_FILENO);
 		return (1);
 	}
@@ -80,7 +82,9 @@ int	check_redir_sign(char **cmd)
 		{
 			ft_putstr_fd("bash: syntax error near unexpected token '",
 				STDERR_FILENO);
-			ft_putstr_fd(redir_sign, STDERR_FILENO);
+			ft_putchar_fd(redir_sign[0], STDERR_FILENO);
+			if (redir_sign[1])
+				ft_putchar_fd(redir_sign[1], STDERR_FILENO);
 			ft_putstr_fd("'\n", STDERR_FILENO);
 			return (1);
 		}
