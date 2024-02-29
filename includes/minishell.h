@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 13:50:29 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:58:05 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int						ft_exit(char **no_surr_quotes);
 int						handle_exit_code(int exit_code);
 bool					can_quit_shell(char **cmd, int *exit_code);
 bool					add_empty_node(t_env **env, char *name);
+bool					ll_has_overflowed(char *str);
 
 int						redirection(t_data *data);
 void					ft_free_cmd(char **cmd);

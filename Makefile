@@ -2,7 +2,7 @@ NAME = minishell
 
 C_FILES =	main.c str_replace.c store_env.c env_list_utils.c env_list_utils2.c input.c parse_input.c \
 			replace_var_names.c split_split.c pipe_split.c exec.c child.c \
-			split_split_utils.c pipe_utils.c remove_surrounding_quotes.c \
+			split_split_utils.c pipe_utils.c remove_surrounding_quotes.c builtin/handle_overflow.c \
 			builtin/echo.c builtin/builtin.c builtin/export.c builtin/ft_pwd.c builtin/ft_cd.c builtin/ft_unset.c \
 			builtin/ft_exit.c \
 			redirections.c redirections_utils.c heredoc.c heredoc_utils.c \

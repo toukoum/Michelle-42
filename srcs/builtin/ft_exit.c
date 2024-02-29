@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 12:51:03 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/24 11:09:06 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/29 15:03:33 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,11 @@ static int	handle_errors(char **no_surr_quotes, int exit_code)
 		ft_putstr_fd("exit\nexit: too many arguments\n", 2);
 		return (TOO_MANY_ARGS);
 	}
-	else if (exit_code == -1)
+	else if (ll_has_overflowed(no_surr_quotes[1]) || exit_code == -1)
 	{
-		ft_putstr_fd("exit\nexit: numeric argument required\n", 2);
+		ft_putstr_fd("exit\nexit: ", 2);
+		ft_putstr_fd(no_surr_quotes[1], 2);
+		ft_putstr_fd(": numeric argument required\n", 2);
 		return (INVALID_ARG);
 	}
 	printf("exit\n");
