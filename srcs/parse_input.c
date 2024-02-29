@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:09:43 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 18:45:09 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/29 12:14:01 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ static bool	is_valid_command(char *str, int *i, char *quote)
 	while (str[*i])
 	{
 		set_quote(str[*i], quote);
-		if (!is_whitespace(str[*i]))
-			return (true);
 		if (str[*i] == '|' && !*quote)
 			return (false);
+		if (!is_whitespace(str[*i]))
+			return (true);
 		(*i)++;
 	}
 	return (false);
