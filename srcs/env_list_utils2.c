@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 18:58:40 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 18:58:56 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/29 13:44:39 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,9 @@ bool	add_empty_node(t_env **env, char *name)
 	else
 		curr->next = new;
 	return (true);
+}
+
+char	*get_env_var_name(char *str)
+{
+	return (ft_substr(str, 0, ft_strchr(str, '=') - str));
 }

@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 21:50:43 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/22 18:49:35 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/29 13:45:05 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ t_env	*store_env(char **env)
 		return (basic_env());
 	while (env[i])
 	{
-		env_list = add_env_node(env_list, get_env_var_value(env[i]),
-				ft_substr(env[i], 0, ft_strchr(env[i], '=') - env[i]));
+		env_list = add_env_node(env_list, get_env_var_name(env[i]),
+				get_env_var_value(env[i]));
 		if (!env_list)
 			return (NULL);
 		i++;
@@ -75,7 +75,7 @@ static char	*increment_shlvl(char *name, char *value)
 	return (value);
 }
 
-t_env	*add_env_node(t_env *head, char *value, char *name)
+t_env	*add_env_node(t_env *head, char *name, char *value)
 {
 	t_env	*new;
 	t_env	*curr;

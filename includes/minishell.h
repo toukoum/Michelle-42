@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 12:03:22 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/29 13:44:52 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ int						check_redir_sign(char **cmd);
 int						is_redir_sign(char *s1, char *s2, size_t len);
 int						open_heredoc(t_data *data);
 void					child_heredoc_free(t_data *data);
+char					*get_env_var_name(char *str);
 char					*last_tmp_name(t_tmpfile *head);
 t_tmpfile				*add_tmpfile_node(t_tmpfile *head);
 char					**redirect_append(char *to_open, char **cmd, int i,
