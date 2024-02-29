@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:09:18 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 20:03:39 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/29 21:54:31 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	input(t_env **env)
 		dup = ft_strdup(input);
 		if (!dup)
 			return (free(input), (void)0);
-		res = parse_input(ft_strdup(input), env, &res);
+		res = parse_input(dup, env, &res);
 		handle_parse_res(&res, input, *env);
 	}
 }

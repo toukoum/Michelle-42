@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 18:58:40 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 19:20:43 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/29 22:48:56 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	set_var(t_env **env, char *name, char *value)
 	return (0);
 }
 
-bool	add_empty_node(t_env **env, char *name)
+t_env	*add_empty_node(t_env **env, char *name)
 {
 	t_env	*curr;
 	t_env	*new;
@@ -48,15 +48,15 @@ bool	add_empty_node(t_env **env, char *name)
 	}
 	new = ft_calloc(1, sizeof(t_env));
 	if (!new)
-		return (false);
+		return (free_env_list(*env), NULL);
 	new->name = ft_strdup(name);
 	if (!new->name)
-		return (false);
+		return (free_env_list(*env), NULL);
 	if (!*env)
 		*env = new;
 	else
 		curr->next = new;
-	return (true);
+	return (*env);
 }
 
 char	*get_env_var_name(char *str)

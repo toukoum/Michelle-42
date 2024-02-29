@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 19:16:57 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/29 22:49:13 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,13 @@ char					*str_replace(char *str, char *old, char *new,
 char					*get_var_value(t_env *head, char *name);
 char					*replace_var_names(char *input, t_env *env,
 							unsigned char res);
+char					*get_export_var_name(char *cmd);
 char					**pipe_split(char *input);
 char					**env_to_split(t_env *head);
 char					**remove_surrounding_quotes(char **split);
 char					***split_split(char **pipe_split);
 
+int						append_var_value(char *name, char *value, t_env **env);
 int						run_command(t_data *data);
 int						exec(char ***split_split, t_env **env);
 int						set_quote(char c, char *quote);
@@ -125,7 +127,7 @@ int						ft_unset(char **cmd, t_env **env);
 int						ft_exit(char **no_surr_quotes);
 int						handle_exit_code(int exit_code);
 bool					can_quit_shell(char **cmd, int *exit_code);
-bool					add_empty_node(t_env **env, char *name);
+t_env					*add_empty_node(t_env **env, char *name);
 bool					ll_has_overflowed(char *str);
 
 int						redirection(t_data *data);
