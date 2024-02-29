@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:09:18 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 19:07:42 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/29 12:01:40 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	quit_shell(t_env *env, unsigned char exit_code)
 void	catch_sigint(int sig)
 {
 	(void)sig;
-	g_exit_code = CHANGE_RES;
+	g_exit_code = CTRL_C;
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -80,8 +80,11 @@ void	input(t_env **env)
 			quit_shell(*env, 0);
 		if (is_empty(input))
 			continue ;
-		if (g_exit_code == CHANGE_RES)
+		if (g_exit_code == CTRL_C)
+		{
 			res = 130;
+			g_exit_code = 0;
+		}
 		res = parse_input(ft_strdup(input), env, &res);
 		handle_parse_res(&res, input, *env);
 	}

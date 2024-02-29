@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 19:06:42 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/29 12:01:24 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_data
 	int					*pids;
 }						t_data;
 
-#define CHANGE_RES 1
+#define CTRL_C 1
 // exit return value
 # define TOO_MANY_ARGS -4
 # define INVALID_ARG -3
