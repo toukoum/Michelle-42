@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:50:09 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 15:04:49 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/29 15:10:00 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,12 @@ bool	ll_has_overflowed(char *str)
 
 	n = ft_ll_atoi(str);
 	itoa = ft_ll_itoa(n);
+	if (str[0] == '+')
+		str++;
+	while (*str && *str == '0')
+		str++;
+	if (!*str)
+		return (false);
 	if (ft_strcmp(itoa, str))
 		return (free(itoa), true);
 	free(itoa);
