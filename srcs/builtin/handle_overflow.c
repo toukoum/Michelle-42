@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:50:09 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 15:10:00 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/29 15:13:58 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 long long	ft_ll_atoi(const char *str)
 {
 	long long	n;
-	int	sign;
+	int			sign;
 
 	n = 0;
 	sign = 1;
