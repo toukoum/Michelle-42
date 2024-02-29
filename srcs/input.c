@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-extern int	g_exit_code;
-
 void	quit_shell(t_env *env, unsigned char exit_code)
 {
 	free_env_list(env);

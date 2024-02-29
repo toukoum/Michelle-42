@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:19:15 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/02/28 18:53:12 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/29 15:40:13 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	handle_heredoc(t_data *data, int i)
 		signal(SIGINT, SIG_DFL);
 		exit(0);
 	}
-	waitpid(-1, &status, 0);
+	waitpid(pid_fork, &status, 0);
 	return (0);
 }
 
