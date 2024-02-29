@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 18:58:40 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 13:44:39 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/29 19:20:43 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,10 @@ bool	add_empty_node(t_env **env, char *name)
 		curr = curr->next;
 	}
 	new = ft_calloc(1, sizeof(t_env));
-	new->name = ft_strdup(name);
 	if (!new)
+		return (false);
+	new->name = ft_strdup(name);
+	if (!new->name)
 		return (false);
 	if (!*env)
 		*env = new;

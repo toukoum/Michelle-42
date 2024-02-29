@@ -6,11 +6,13 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:09:18 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 14:10:10 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/29 19:34:22 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_exit_code;
 
 void	quit_shell(t_env *env, unsigned char exit_code)
 {
@@ -23,7 +25,7 @@ void	quit_shell(t_env *env, unsigned char exit_code)
 void	catch_sigint(int sig)
 {
 	(void)sig;
-	g_exit_code = CTRL_C;
+	g_exit_code = sig;
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -65,6 +67,7 @@ bool	is_empty(char *str)
 void	input(t_env **env)
 {
 	char			*input;
+	char			*dup;
 	int				res;
 
 	signal(SIGINT, catch_sigint);
@@ -82,6 +85,9 @@ void	input(t_env **env)
 			res = 130;
 			g_exit_code = 0;
 		}
+		dup = NULL;
+		if (!dup)
+			return (free(input), (void)0);
 		res = parse_input(ft_strdup(input), env, &res);
 		handle_parse_res(&res, input, *env);
 	}

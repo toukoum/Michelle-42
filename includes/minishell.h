@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 14:58:05 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/29 19:16:57 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_data
 }						t_data;
 
 // signal value
-# define CTRL_C 1
+# define CTRL_C 2
 
 // exit return value
 # define TOO_MANY_ARGS -4

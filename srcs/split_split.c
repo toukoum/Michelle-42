@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:50:34 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 18:46:58 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/29 19:30:28 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static char	*stock_redictors(char *str, int *i)
 	while (str[j] && is_redirector(str[j]))
 		j++;
 	new_str = ft_calloc(j + 1, sizeof(char));
+	if (!new_str)
+		return (NULL);
 	j = 0;
 	while (str[*i] && is_redirector(str[*i]))
 		new_str[j++] = str[(*i)++];
