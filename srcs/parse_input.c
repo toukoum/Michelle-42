@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:09:43 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 13:50:18 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:39:18 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	parse_input(char *input, t_env **env, int *res)
 		return (free(input), 1);
 	if (!quote_closed(input))
 		return (ft_putstr_fd("syntax error: unclosed quote\n", 2),
-				free(input), 1);
+			free(input), 1);
 	input = replace_var_names(input, *env, *res);
 	if (is_empty(input))
 		return (0);

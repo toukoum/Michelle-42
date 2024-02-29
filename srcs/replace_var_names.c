@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:16:20 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 14:36:06 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:38:20 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,14 @@ static int	is_var_name_start(char *input, int i, char *quote)
 {
 	if (*quote == '\'')
 		return (0);
-	if (!is_limiter(input, i, *quote) && input[i] == '$' && (ft_isalnum(input[i + 1])
-			|| input[i + 1] == '_'))
+	if (!is_limiter(input, i, *quote) && input[i] == '$'
+		&& (ft_isalnum(input[i + 1]) || input[i + 1] == '_'))
 	{
 		*quote = 0;
 		return (1);
 	}
-	if (!is_limiter(input, i, *quote) && input[i] == '$' && input[i + 1] == '?')
+	if (!is_limiter(input, i, *quote) && input[i] == '$'
+		&& input[i + 1] == '?')
 	{
 		*quote = 0;
 		return (1);

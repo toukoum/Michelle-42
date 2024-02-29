@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 14:08:13 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:39:10 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,5 @@ int	run_command(t_data *data)
 		err = execve_error(no_surr_quotes[0]);
 	if (ft_strcmp(path, data->cmd[0]))
 		free(path);
-	free_split(no_surr_quotes);
-	return (err);
+	return (free_split(no_surr_quotes), err);
 }
