@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_var_names.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:16:20 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/27 15:49:08 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/29 14:36:06 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,39 @@ static char	*replace_curr_name(char *input, t_env *env, int *i,
 	return (replaced);
 }
 
-static int	is_var_name_start(char *input, int i, char *c)
+bool	is_limiter(char *str, int i, char quote)
 {
-	if (*c == '\'')
+	int	counter;
+
+	counter = 0;
+	if (quote)
+		return (false);
+	while (i >= 0 && is_whitespace(str[i]))
+		i--;
+	if (i == 0 || str[i - 1] != '<')
+		return (false);
+	i--;
+	while (i >= 0 && str[i] == '<')
+	{
+		counter++;
+		i--;
+	}
+	return (counter == 2);
+}
+
+static int	is_var_name_start(char *input, int i, char *quote)
+{
+	if (*quote == '\'')
 		return (0);
-	if (input[i] == '$' && (ft_isalnum(input[i + 1])
+	if (!is_limiter(input, i, *quote) && input[i] == '$' && (ft_isalnum(input[i + 1])
 			|| input[i + 1] == '_'))
 	{
-		*c = 0;
+		*quote = 0;
 		return (1);
 	}
-	if (input[i] == '$' && input[i + 1] == '?')
+	if (!is_limiter(input, i, *quote) && input[i] == '$' && input[i + 1] == '?')
 	{
-		*c = 0;
+		*quote = 0;
 		return (1);
 	}
 	return (0);
@@ -81,20 +101,14 @@ static int	is_var_name_start(char *input, int i, char *c)
 char	*replace_var_names(char *input, t_env *env, unsigned char res)
 {
 	int		i;
-	char	c;
+	char	quote;
 
 	i = 0;
-	c = 0;
+	quote = 0;
 	while (input[i])
 	{
-		if (input[i] == '\'' || input[i] == '"')
-		{
-			if (c == input[i])
-				c = 0;
-			else if (!c)
-				c = input[i];
-		}
-		if (is_var_name_start(input, i, &c))
+		set_quote(input[i], &quote);
+		if (is_var_name_start(input, i, &quote))
 		{
 			input = replace_curr_name(input, env, &i, res);
 			if (!input || !input[0])
