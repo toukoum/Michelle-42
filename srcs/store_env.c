@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 21:50:43 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 13:45:05 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/29 15:12:52 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ static t_env	*basic_env(void)
 	t_env	*env;
 
 	env = NULL;
-	env = add_env_node(env, ft_strdup(static_cwd(NOTHING)), ft_strdup("PWD"));
-	env = add_env_node(env, ft_itoa(1), ft_strdup("SHLVL"));
-	env = add_env_node(env, ft_strdup("/usr/bin/env"), ft_strdup("_"));
+	env = add_env_node(env, ft_strdup("PWD"), ft_strdup(static_cwd(NOTHING)));
+	env = add_env_node(env, ft_strdup("SHLVL"), ft_itoa(1));
+	env = add_env_node(env, ft_strdup("_"), ft_strdup("/usr/bin/env"));
 	return (env);
 }
 
