@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 12:01:24 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/29 12:03:22 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ typedef struct s_data
 	int					*pids;
 }						t_data;
 
-#define CTRL_C 1
+// signal value
+# define CTRL_C 1
+
 // exit return value
 # define TOO_MANY_ARGS -4
 # define INVALID_ARG -3
@@ -67,6 +69,7 @@ enum					e_cwd_action
 };
 
 extern int				g_exit_code;
+
 # define DEBUG 0
 # define BHYEL "\e[1;93m"
 # define MAGB "\e[45m"
