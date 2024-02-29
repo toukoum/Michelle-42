@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 18:53:25 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/02/29 14:08:13 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
+#include <signal.h>
 
 static char	**split_add_slashes(char *path)
 {
@@ -103,6 +104,7 @@ int	run_command(t_data *data)
 	char	*path;
 	int		err;
 
+	signal(SIGQUIT, SIG_DFL);
 	setup_pipes(*data);
 	if (!data->cmd || !data->cmd[0])
 		return (141);

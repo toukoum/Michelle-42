@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 13:44:52 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/02/29 13:50:29 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ typedef struct s_data
 
 // parse_input return value
 # define EXIT -2
-# define SYNTAX_ERROR -1
 
 // get_cwd action parameter
 enum					e_cwd_action
