@@ -36,7 +36,9 @@ static void	handle_parse_res(int *res, char *input, t_env *env)
 	free(input);
 	if (*res == 131)
 		ft_putstr_fd("Quit (core dumped)\n", 2);
-	if (*res == EXIT)
+	else if (*res == 139)
+		ft_putstr_fd("Segmentation fault (core dumped)\n", 2);
+	else if (*res == EXIT)
 		quit_shell(env, 0);
 }
 

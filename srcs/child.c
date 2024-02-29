@@ -66,7 +66,7 @@ static int	cmd_not_found(char **cmd)
 {
 	int	err;
 
-	if (access(cmd[0], F_OK))
+	if ((cmd[0][0] == '/' || cmd[0][0] == '.') && access(cmd[0], F_OK))
 	{
 		ft_putstr_fd("no such file or directory: ", 2);
 		err = 127;
