@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   apply_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 15:57:42 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/02/29 14:12:44 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/03/01 13:04:19 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,10 @@ char	**redirect_heredoc(t_data *data, int i)
 
 	fd = open(data->tmpfile->name, O_RDONLY);
 	if (fd == -1)
-		return (err_open_file(data->tmpfile->name));
+		return ((data->exit_code = 1), free_tmpfile(data->tmpfile),
+			err_open_file(data->tmpfile->name));
 	if (dup2(fd, STDIN_FILENO) == -1)
-	{
-		perror("Error with dup");
-		return (NULL);
-	}
+		return (perror("Error with dup"), NULL);
 	close(fd);
 	tmp = data->tmpfile;
 	if (data->tmpfile->next)

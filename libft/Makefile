@@ -14,16 +14,16 @@ CFLAGS =        -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	ar rc $(NAME) $(OBJS) $(PRINTF_OBJS)
+	@ar rc $(NAME) $(OBJS) $(PRINTF_OBJS)
 
 .c.o:
-	cc $(CFLAGS) -c $^
+	@cc $(CFLAGS) -c $^
 
 clean:
-	rm -rf $(OBJS)
+	@rm -rf $(OBJS)
 
 fclean:         clean
-	rm -rf $(NAME)
+	@rm -rf $(NAME)
 
 re: fclean all
 

@@ -9,31 +9,51 @@ C_FILES =	main.c str_replace.c store_env.c env_list_utils.c env_list_utils2.c in
 			apply_redirection.c sig_heredoc.c
 
 SRCS = $(addprefix srcs/,$(C_FILES))
-OBJS = $(SRCS:.c=.o)
+OBJS = $(addprefix $(OBJS_DIR),$(C_FILES:.c=.o))
+OBJS_DIR = ./objs/
+DEPS = $(OBJS:.o=.d)
+
+RED=\033[0;31m
+ROSE=\033[0;95m
+GREEN=\033[0;32m
+NC=\033[0m
+YELLOW=\033[0;33m
+CYAN=\033[1;34m
+
 
 CFLAGS = -Wall -Wextra -Werror -I includes/ -g3
 
 all: $(NAME)
 
-
 $(NAME): $(OBJS)
-	make -C libft/
-	cc $(CFLAGS) $(OBJS) -o $(NAME) libft/libft.a -lreadline
+	@echo "$(GREEN)Creating libft...✅$(NC)"
+	@make -C libft/ > /dev/null 2>&1
+	@echo "$(YELLOW)Creating michelle...✅$(NC)"
+	@cc $(CFLAGS) -o $(NAME) $(OBJS) libft/libft.a -lreadline
+	@echo "$(CYAN)Done 🔥\n$(NC)"
 
-.c.o:
-	cc $(CFLAGS) -c $^ -o $@
+
+$(OBJS_DIR)%.o: srcs/%.c
+	@mkdir -p $(OBJS_DIR)
+	@mkdir -p $(OBJS_DIR)/builtin
+	@cc $(CFLAGS) -MMD -c $< -o $@
 
 clean:
-	make -C libft/ clean
-	rm -f $(OBJS)
+	@echo "$(RED)Deleting objects files...✅$(NC)"
+	@make -C libft/ clean
+	@rm -f $(OBJS) $(DEPS)
+	@echo "$(CYAN)Done 🔥\n$(NC)"
+
+
 
 fclean: clean
-	make -C libft/ fclean
-	rm -f $(NAME)
+	@echo "$(RED)Deleting michelle file...✅$(NC)"
+	@make -C libft/ fclean
+	@rm -f $(NAME)
+	@rm -rf $(OBJS_DIR)
+	@echo "$(CYAN)Done 🔥\n$(NC)"
 
 re: fclean all
-
-t: all
-	@./$(NAME)
+-include $(DEPS)
 
 .PHONY: all clean fclean re

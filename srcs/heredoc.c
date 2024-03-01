@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:19:15 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/02/29 15:40:13 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/03/01 12:52:27 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	open_heredoc(t_data *data)
 		{
 			data->tmpfile = add_tmpfile_node(data->tmpfile);
 			if (!data->tmpfile)
-				return (1);
+				return (free_tmpfile(data->tmpfile), 1);
 			if (handle_heredoc(data, i))
 				return (free_tmpfile(data->tmpfile), 1);
 		}

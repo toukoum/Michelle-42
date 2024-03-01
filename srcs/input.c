@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:09:18 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 21:54:31 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/03/01 13:10:00 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	input(t_env **env)
 	res = 0;
 	while (1)
 	{
-		input = readline(BMAG"🧓 Michelle" COLOR_RESET BHYEL"->"COLOR_RESET" ");
+		input = readline(BMAG"🧓 Michelle" COLOR_RESET BHYEL" ▻"COLOR_RESET" ");
 		if (!input)
 			quit_shell(*env, 0);
 		if (is_empty(input))
