@@ -107,5 +107,6 @@ Push-Swap-Tester
 
 *.o
 *.a
+*.d
 minishell
 minishell_tester

@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:16:20 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 14:38:20 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/03/04 19:02:32 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ bool	is_limiter(char *str, int i, char quote)
 		return (false);
 	while (i >= 0 && is_whitespace(str[i]))
 		i--;
-	if (i == 0 || str[i - 1] != '<')
+	if (i <= 0 || str[i - 1] != '<')
 		return (false);
 	i--;
 	while (i >= 0 && str[i] == '<')
