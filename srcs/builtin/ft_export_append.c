@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 22:36:48 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 22:41:20 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/03/04 23:03:56 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,20 @@ static int	append(char *name, char *value, t_env *curr)
 	return (0);
 }
 
+static int	handle_empty_list(char *name, char *value, t_env **env)
+{
+	*env = add_env_node(*env, name, value);
+	if (!*env)
+		return (-1);
+	return (0);
+}
+
 int	append_var_value(char *name, char *value, t_env **env)
 {
 	t_env	*curr;
 
+	if (!*env)
+		return (handle_empty_list(name, value, env));
 	curr = *env;
 	while (curr)
 	{
