@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/03/05 12:01:47 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:30:59 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ static int	wait_childs(t_data data)
 	return (0);
 }
 
-static int	create_childs(char *input, char ***split, char **env, t_env *env_list)
+static int	create_childs(char *input, char ***split,
+		char **env, t_env *env_list)
 {
 	t_data	data;
 
