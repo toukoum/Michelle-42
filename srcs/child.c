@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/03/05 12:16:34 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:33:10 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,8 @@ static char	*find_path(t_data data)
 	return (NULL);
 }
 
-static int	cmd_not_found(char **cmd)
+static int	cmd_not_found(char **cmd, int err)
 {
-	int	err;
-
-	err = 0;
 	if ((cmd[0][0] == '/' || cmd[0][0] == '.') && access(cmd[0], F_OK))
 	{
 		ft_putstr_fd("no such file or directory: ", 2);
@@ -74,8 +71,7 @@ static int	cmd_not_found(char **cmd)
 	}
 	else if ((cmd[0][0] == '/' || cmd[0][0] == '.') && is_folder(cmd[0]))
 	{
-		ft_putstr_fd(cmd[0], 2);
-		ft_putstr_fd(": Is a directory\n", 2);
+		ft_putstr_fd("Is a directory: ", 2);
 		err = 126;
 	}
 	else if ((cmd[0][0] == '/' || cmd[0][0] == '.') && access(cmd[0], X_OK))
@@ -88,9 +84,8 @@ static int	cmd_not_found(char **cmd)
 		ft_putstr_fd("command not found: ", 2);
 		err = 127;
 	}
-	ft_putstr_fd(cmd[0], 2);
-	ft_putstr_fd("\n", 2);
-	return (free_split(cmd), err);
+	return (ft_putstr_fd(cmd[0], 2), ft_putstr_fd("\n", 2), free_split(cmd),
+		err);
 }
 
 int	execve_error(char *name)
@@ -121,7 +116,7 @@ int	run_command(t_data *data, char *input)
 		return (free_split(no_surr_quotes), err);
 	path = find_path(*data);
 	if (!path)
-		return (cmd_not_found(no_surr_quotes));
+		return (cmd_not_found(no_surr_quotes, 0));
 	if (execve(path, no_surr_quotes, data->env) == -1)
 		err = execve_error(no_surr_quotes[0]);
 	if (ft_strcmp(path, data->cmd[0]))
