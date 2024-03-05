@@ -6,13 +6,13 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 22:09:18 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/03/01 13:10:00 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/03/05 11:38:33 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_exit_code;
+int			g_exit_code;
 
 void	quit_shell(t_env *env, unsigned char exit_code)
 {
@@ -61,21 +61,21 @@ bool	is_empty(char *str)
 
 /**
  * @brief handle the input of user
- * 
+ *
  * @param env environement variable
  */
-void	input(t_env **env)
+void	input(t_env **env, int res, char *prompt)
 {
-	char			*input;
-	char			*dup;
-	int				res;
+	char	*input;
+	char	*dup;
 
 	signal(SIGINT, catch_sigint);
 	signal(SIGQUIT, SIG_IGN);
-	res = 0;
 	while (1)
 	{
-		input = readline(BMAG"🧓 Michelle" COLOR_RESET BHYEL" ▻"COLOR_RESET" ");
+		prompt = get_prompt();
+		input = readline(prompt);
+		free(prompt);
 		if (!input)
 			quit_shell(*env, 0);
 		if (is_empty(input))

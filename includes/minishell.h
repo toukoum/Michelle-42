@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/03/01 12:50:26 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/03/05 11:05:34 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,10 @@ extern int				g_exit_code;
 t_env					*store_env(char **env);
 t_env					*add_env_node(t_env *head, char *name, char *value);
 
+char					*get_pwd(void);
+char					*get_prompt(void);
 void					free_env_list(t_env *env);
-void					input(t_env **env);
+void					input(t_env **env, int res, char *prompt);
 void					quit_shell(t_env *env, unsigned char exit_code);
 void					free_split_split(char ***split);
 void					close_pipes(t_data data);

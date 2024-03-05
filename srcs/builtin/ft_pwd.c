@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 16:12:51 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/19 12:17:03 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/03/05 11:38:50 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,23 @@ int	ft_pwd(void)
 		return (1);
 	printf("%s\n", cwd);
 	return (0);
+}
+
+char	*get_pwd(void)
+{
+	char	*cwd;
+	char	*tmp;
+
+	cwd = getcwd(NULL, 0);
+	if (!cwd)
+		return (NULL);
+	tmp = cwd;
+	cwd = ft_strjoin("\n\001\033[35m\002", cwd);
+	free(tmp);
+	if (!cwd)
+		return (NULL);
+	tmp = cwd;
+	cwd = ft_strjoin(cwd, "\001\033[0m\002\n");
+	free(tmp);
+	return (cwd);
 }

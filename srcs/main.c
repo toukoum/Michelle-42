@@ -6,16 +6,31 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 21:50:45 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/28 15:57:17 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/03/05 11:39:00 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+char	*get_prompt(void)
+{
+	char	*pwd;
+	char	*tmp;
+	char	*prompt;
+
+	pwd = get_pwd();
+	tmp = pwd;
+	prompt = ft_strjoin(pwd, "\001\033[33m\033[1m\002> \001\033[0m\002");
+	free(pwd);
+	return (prompt);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_env	*env_list;
+	char	*prompt;
 
+	prompt = NULL;
 	(void)ac;
 	(void)av;
 	g_exit_code = 0;
@@ -23,7 +38,7 @@ int	main(int ac, char **av, char **env)
 	env_list = store_env(env);
 	if (!env_list)
 		return (0);
-	input(&env_list);
+	input(&env_list, 0, prompt);
 	free_env_list(env_list);
 	return (0);
 }
