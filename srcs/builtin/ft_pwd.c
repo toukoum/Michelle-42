@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 16:12:51 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/03/05 11:38:50 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/03/05 12:03:08 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,11 @@ char	*get_pwd(void)
 	char	*cwd;
 	char	*tmp;
 
-	cwd = getcwd(NULL, 0);
+	cwd = static_cwd(NOTHING);
 	if (!cwd)
 		return (NULL);
 	tmp = cwd;
 	cwd = ft_strjoin("\n\001\033[35m\002", cwd);
-	free(tmp);
 	if (!cwd)
 		return (NULL);
 	tmp = cwd;

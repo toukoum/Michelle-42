@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 21:50:45 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/03/05 11:39:00 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/03/05 11:58:22 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*get_prompt(void)
 	char	*prompt;
 
 	pwd = get_pwd();
+	if (!pwd)
+		return (ft_strdup("\001\033[33m\033[1m\002> \001\033[0m\002"));
 	tmp = pwd;
 	prompt = ft_strjoin(pwd, "\001\033[33m\033[1m\002> \001\033[0m\002");
 	free(pwd);
