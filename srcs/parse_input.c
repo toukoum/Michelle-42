@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:09:43 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/03/05 11:57:44 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/03/05 14:27:29 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,17 +85,17 @@ int	parse_input(char *input, char *dup, t_env **env, int *res)
 	char	***split_arr;
 
 	if (!pipe_valid(input))
-		return (1);
+		return (free(dup), 1);
 	if (!quote_closed(input))
-		return (ft_putstr_fd("syntax error: unclosed quote\n", 2), 1);
+		return (free(dup), ft_putstr_fd("syntax error: unclosed quote\n", 2), 1);
 	dup = replace_var_names(dup, *env, *res);
 	if (!dup)
 		return (EXIT);
 	if (is_empty(dup))
-		return (0);
+		return (free(dup), 0);
 	split = pipe_split(dup);
 	if (!split)
-		return (EXIT);
+		return (free(dup), EXIT);
 	split_arr = split_split(split);
 	free_split(split);
 	free(dup);
