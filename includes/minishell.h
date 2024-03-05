@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/03/05 11:05:34 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/03/05 12:07:57 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,10 @@ char					**remove_surrounding_quotes(char **split);
 char					***split_split(char **pipe_split);
 
 int						append_var_value(char *name, char *value, t_env **env);
-int						run_command(t_data *data);
-int						exec(char ***split_split, t_env **env);
+int						run_command(t_data *data, char *input);
+int						exec(char *input, char ***split_split, t_env **env);
 int						set_quote(char c, char *quote);
-int						parse_input(char *input, t_env **env, int *res);
+int						parse_input(char *input, char *dup, t_env **env, int *res);
 int						split_split_size(char ***split);
 int						**create_pipes(int size);
 int						count_words(char *str);
@@ -154,6 +154,6 @@ char					**delete_open_file(char **cmd, int i, t_data *data);
 char					**redirect_heredoc(t_data *data, int i);
 void					free_tmpfile(t_tmpfile *tmpfile_list);
 void					heredoc_sigint(int code);
-void					setup_pipes(t_data data);
+void					setup_pipes(t_data data, char *input);
 
 #endif

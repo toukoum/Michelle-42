@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:11:45 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/27 19:48:05 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/03/05 12:09:00 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	update_env(t_env **env, char *old_pwd)
 		return (free(old_pwd), 1);
 	if (set_var(env, ft_strdup("OLDPWD"), old_pwd))
 		return (1);
-	if (set_var(env, getcwd(NULL, 0), ft_strdup("PWD")))
+	if (set_var(env, ft_strdup("PWD"), getcwd(NULL, 0)))
 		return (1);
 	return (0);
 }

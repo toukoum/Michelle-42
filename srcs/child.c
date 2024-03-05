@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 14:39:10 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:05:28 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,14 @@ int	execve_error(char *name)
 	return (126);
 }
 
-int	run_command(t_data *data)
+int	run_command(t_data *data, char *input)
 {
 	char	**no_surr_quotes;
 	char	*path;
 	int		err;
 
 	signal(SIGQUIT, SIG_DFL);
-	setup_pipes(*data);
+	setup_pipes(*data, input);
 	if (!data->cmd || !data->cmd[0])
 		return (141);
 	err = redirection(data);

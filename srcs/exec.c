@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 13:10:04 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 22:23:25 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:01:47 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	wait_childs(t_data data)
 	return (0);
 }
 
-static int	create_childs(char ***split, char **env, t_env *env_list)
+static int	create_childs(char *input, char ***split, char **env, t_env *env_list)
 {
 	t_data	data;
 
@@ -89,7 +89,7 @@ static int	create_childs(char ***split, char **env, t_env *env_list)
 		if (data.pids[data.i] == 0)
 		{
 			data.cmd = split[data.i];
-			data.i = run_command(&data);
+			data.i = run_command(&data, input);
 			child_free(data);
 		}
 		free_tmpfile(data.tmpfile);
@@ -99,7 +99,7 @@ static int	create_childs(char ***split, char **env, t_env *env_list)
 	return (wait_childs(data));
 }
 
-int	exec(char ***split, t_env **env_list)
+int	exec(char *input, char ***split, t_env **env_list)
 {
 	char	**env;
 	int		status;
@@ -115,7 +115,7 @@ int	exec(char ***split, t_env **env_list)
 			return (free_split_split(split), status);
 	}
 	env = env_to_split(*env_list);
-	status = create_childs(split, env, *env_list);
+	status = create_childs(input, split, env, *env_list);
 	if (status == -1)
 		return (free_split(env), free_split_split(split), EXIT);
 	free_split(env);

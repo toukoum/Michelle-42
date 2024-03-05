@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sig_heredoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 14:18:04 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/03/01 13:10:05 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/03/05 12:05:20 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ void	heredoc_sigint(int code)
 	rl_redisplay();
 }
 
-void	setup_pipes(t_data data)
+void	setup_pipes(t_data data, char *input)
 {
+	free(input);
 	if (data.pipes[0] == NULL)
 		return ;
 	if (data.pipes[data.i] != NULL)

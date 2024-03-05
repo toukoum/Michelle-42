@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 12:09:43 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/29 20:02:22 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/03/05 11:57:44 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,29 +78,28 @@ bool	pipe_valid(char *str)
 	return (true);
 }
 
-int	parse_input(char *input, t_env **env, int *res)
+int	parse_input(char *input, char *dup, t_env **env, int *res)
 {
 	int		status;
 	char	**split;
 	char	***split_arr;
 
 	if (!pipe_valid(input))
-		return (free(input), 1);
+		return (1);
 	if (!quote_closed(input))
-		return (ft_putstr_fd("syntax error: unclosed quote\n", 2),
-			free(input), 1);
-	input = replace_var_names(input, *env, *res);
-	if (!input)
+		return (ft_putstr_fd("syntax error: unclosed quote\n", 2), 1);
+	dup = replace_var_names(dup, *env, *res);
+	if (!dup)
 		return (EXIT);
-	if (is_empty(input))
+	if (is_empty(dup))
 		return (0);
-	split = pipe_split(input);
+	split = pipe_split(dup);
 	if (!split)
 		return (EXIT);
 	split_arr = split_split(split);
 	free_split(split);
-	free(input);
-	status = exec(split_arr, env);
+	free(dup);
+	status = exec(input, split_arr, env);
 	if (status == EXIT)
 		return (EXIT);
 	return (status);
