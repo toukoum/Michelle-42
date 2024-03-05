@@ -6,7 +6,7 @@
 /*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 13:48:44 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/03/05 12:05:28 by ketrevis         ###   ########.fr       */
+/*   Updated: 2024/03/05 12:16:34 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static int	cmd_not_found(char **cmd)
 {
 	int	err;
 
+	err = 0;
 	if ((cmd[0][0] == '/' || cmd[0][0] == '.') && access(cmd[0], F_OK))
 	{
 		ft_putstr_fd("no such file or directory: ", 2);
@@ -73,8 +74,9 @@ static int	cmd_not_found(char **cmd)
 	}
 	else if ((cmd[0][0] == '/' || cmd[0][0] == '.') && is_folder(cmd[0]))
 	{
+		ft_putstr_fd(cmd[0], 2);
 		ft_putstr_fd(": Is a directory\n", 2);
-		return (126);
+		err = 126;
 	}
 	else if ((cmd[0][0] == '/' || cmd[0][0] == '.') && access(cmd[0], X_OK))
 	{
