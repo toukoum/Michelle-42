@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:20:06 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/03/05 12:34:55 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/03/05 12:35:27 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ int						append_var_value(char *name, char *value, t_env **env);
 int						run_command(t_data *data, char *input);
 int						exec(char *input, char ***split_split, t_env **env);
 int						set_quote(char c, char *quote);
-int						parse_input(char *input, char *dup, t_env **env, int *res);
+int						parse_input(char *input, char *dup, t_env **env,
+							int *res);
 int						split_split_size(char ***split);
 int						**create_pipes(int size);
 int						count_words(char *str);
