@@ -22,6 +22,8 @@ static char	**split_add_slashes(char *path)
 
 	i = 0;
 	split = ft_split(path, ':');
+	if (!split)
+		return (NULL);
 	while (split[i])
 	{
 		if (split[i][ft_strlen(split[i]) - 1] != '/')
@@ -50,7 +52,7 @@ static char	*find_path(t_data data, char **no_quote)
 	{
 		path = ft_strjoin(split[i], no_quote[0]);
 		if (!path)
-			return (NULL);
+			return (free_split(split), NULL);
 		if (!access(path, X_OK))
 			return (free_split(split), path);
 		free(path);

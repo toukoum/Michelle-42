@@ -23,6 +23,8 @@ char	*remove_quotes(char *str)
 	j = 0;
 	quote = 0;
 	new_str = ft_calloc(ft_strlen(str) + 1, sizeof(char));
+	if (!new_str)
+		return (NULL);
 	while (str[i])
 	{
 		if (set_quote(str[i], &quote) && str[i] != quote)
@@ -44,6 +46,8 @@ char	**remove_surrounding_quotes(char **split)
 	while (split[i])
 	{
 		no_surr_quote[i] = remove_quotes(split[i]);
+		if (!no_surr_quote[i])
+			return (free_split(split), NULL);
 		i++;
 	}
 	return (no_surr_quote);
