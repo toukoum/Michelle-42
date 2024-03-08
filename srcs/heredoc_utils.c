@@ -6,7 +6,7 @@
 /*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:02:48 by rgiraud           #+#    #+#             */
-/*   Updated: 2024/03/01 13:00:17 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/03/08 10:38:14 by rgiraud          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	child_heredoc_free(t_data *data)
 	free_env_list(data->env_list);
 	free_split_split(data->split);
 	free_tmpfile(data->tmpfile);
+	static_cwd(FREE);
 	free(data->pids);
 }
 
