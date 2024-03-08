@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_surrounding_quotes.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgiraud <rgiraud@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ketrevis <ketrevis@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:01:31 by ketrevis          #+#    #+#             */
-/*   Updated: 2024/02/21 15:31:49 by rgiraud          ###   ########.fr       */
+/*   Updated: 2024/03/08 06:43:27 by ketrevis         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	**remove_surrounding_quotes(char **split)
 	{
 		no_surr_quote[i] = remove_quotes(split[i]);
 		if (!no_surr_quote[i])
-			return (free_split(split), NULL);
+			return (free_split(no_surr_quote), NULL);
 		i++;
 	}
 	return (no_surr_quote);
